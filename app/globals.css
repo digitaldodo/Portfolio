@@ -1,0 +1,74 @@
+@config "../tailwind.config.ts";
+@import "tailwindcss";
+
+:root {
+  --background: #0a0a0a;
+  --foreground: #f8fafc;
+  --muted: #a1a1aa;
+  --gold: #d4af37;
+  --crimson: #dc2626;
+  --glass: rgba(255, 255, 255, 0.05);
+  --glass-line: rgba(255, 255, 255, 0.1);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+  scroll-behavior: smooth;
+  background: var(--background);
+}
+
+body {
+  min-height: 100vh;
+  overflow-x: hidden;
+  background:
+    linear-gradient(118deg, rgba(220, 38, 38, 0.16) 0%, transparent 24%),
+    linear-gradient(242deg, rgba(212, 175, 55, 0.13) 0%, transparent 22%),
+    linear-gradient(180deg, #0a0a0a 0%, #111111 48%, #070707 100%);
+  color: var(--foreground);
+  font-family: var(--font-inter), Arial, Helvetica, sans-serif;
+}
+
+::selection {
+  background: rgba(212, 175, 55, 0.34);
+  color: #ffffff;
+}
+
+a {
+  text-decoration: none;
+}
+
+.font-heading {
+  font-family: var(--font-space-grotesk), Arial, Helvetica, sans-serif;
+}
+
+.section-shell {
+  width: min(1120px, calc(100% - 2rem));
+  margin-inline: auto;
+}
+
+.glass-panel {
+  border: 1px solid var(--glass-line);
+  background: var(--glass);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.32);
+  backdrop-filter: blur(18px);
+}
+
+.focus-ring {
+  outline: none;
+}
+
+.focus-ring:focus-visible {
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.36);
+}
+
+.pitch-grid {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: linear-gradient(to bottom, black 0%, black 68%, transparent 100%);
+}
