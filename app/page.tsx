@@ -681,8 +681,7 @@ export default function Home() {
             transition={{ ...batSwingTransition, delay: 0.2 }}
             className="mt-5 max-w-2xl text-lg leading-8 text-zinc-300 sm:text-xl"
           >
-            Building scalable enterprise solutions. Top 1% nationally recognized by IIT Roorkee. Coding with a
-            &quot;Play Bold&quot; mentality.
+            Building scalable enterprise solutions. Coding with a &quot;Play Bold&quot; mentality.
           </motion.p>
           <motion.div
             initial={{ x: -50, opacity: 0 }}
