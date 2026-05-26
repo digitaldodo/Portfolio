@@ -4,19 +4,28 @@ import {
   ArrowUpRight,
   Award,
   Code2,
+  Database,
+  Download,
+  Eye,
   ExternalLink,
-  Heart,
+  Gauge,
+  Layers3,
   Mail,
   Phone,
+  Route,
   ScanLine,
+  Server,
   ShieldCheck,
+  Star,
   Smartphone,
   Trophy,
   Zap
 } from "lucide-react";
-import { motion, useMotionValue, useScroll, useTransform } from "framer-motion";
-import { useRef, useState } from "react";
+import { animate, motion, useInView, useMotionValue, useScroll, useTransform } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 import type { MouseEvent } from "react";
+import { AmbientLighting } from "./components/AmbientLighting";
+import { LiveMatchStrip } from "./components/LiveMatchStrip";
 import { Navigation } from "./components/Navigation";
 import { PitchScrollTracker } from "./components/PitchScrollTracker";
 import { SkillsSection } from "./components/SkillsSection";
@@ -34,33 +43,109 @@ const trophies = [
     title: "Leadership and Team Effectiveness",
     year: "2026",
     issuer: "IIT Roorkee / NPTEL",
-    result: "Top 1% Topper, Score: 90"
+    result: "Top 1% Topper, Score: 90",
+    rarity: "Player of the Match",
+    highlight: true
   },
   {
     title: "Management Information System",
     year: "2025",
     issuer: "NPTEL",
-    result: "Elite + Gold, Score: 92"
+    result: "Elite + Gold, Score: 92",
+    rarity: "Gold Medal"
   },
   {
     title: "Intro. to Environmental Engineering",
     year: "2025",
     issuer: "NPTEL",
-    result: "Elite + Silver, Score: 84"
+    result: "Elite + Silver, Score: 84",
+    rarity: "Silver Medal"
   },
   {
     title: "Software Engineering",
     year: "2024",
     issuer: "NPTEL",
-    result: "Elite, Score: 73"
+    result: "Elite, Score: 73",
+    rarity: "Elite"
   },
   {
     title: "Problem Solving",
     year: "Ongoing",
     issuer: "GeeksforGeeks and LeetCode",
-    result: "Solved 200+ coding challenges combined"
+    result: "Solved 200+ coding challenges combined",
+    rarity: "Consistency Streak"
   }
 ];
+
+const careerStats = [
+  {
+    inningsLabel: "Matches Played",
+    label: "Projects Built",
+    value: 1,
+    suffix: "+",
+    detail: "Flagship full-stack platform",
+    icon: Layers3
+  },
+  {
+    inningsLabel: "Runs Scored",
+    label: "Problems Solved",
+    value: 200,
+    suffix: "+",
+    detail: "Across GFG and LeetCode",
+    icon: Code2
+  },
+  {
+    inningsLabel: "Batting Average",
+    label: "CGPA",
+    value: 8.43,
+    decimals: 2,
+    detail: "B.Tech CSE, GLA University",
+    icon: Gauge
+  },
+  {
+    inningsLabel: "Partnerships",
+    label: "Team Skills",
+    value: 3,
+    suffix: "+",
+    detail: "Leadership, communication, delivery",
+    icon: ShieldCheck
+  }
+];
+
+const recentInnings = [
+  {
+    title: "Built AccessFlow mobile app",
+    description:
+      "Created a field-ready React Native interface for visitor and workforce access workflows.",
+    icon: Smartphone
+  },
+  {
+    title: "Implemented role-based workflows",
+    description:
+      "Designed approval paths and access boundaries for admins, guards, and operational users.",
+    icon: Route
+  },
+  {
+    title: "Deployed production backend",
+    description:
+      "Published Spring Boot services with MongoDB-backed data flows for real operational use.",
+    icon: Server
+  },
+  {
+    title: "Improved dashboard UX",
+    description:
+      "Refined high-signal views so teams can scan visitor status and security activity faster.",
+    icon: Database
+  },
+  {
+    title: "Solved 200+ DSA problems",
+    description:
+      "Maintained steady problem-solving practice across GeeksforGeeks and LeetCode.",
+    icon: Code2
+  }
+];
+
+const resumePath = "/assets/Ansh_Gupta_Resume.pdf";
 
 const batSwingTransition = { duration: 0.4, ease: "easeOut" as const };
 
@@ -83,6 +168,87 @@ function SectionHeading({
       <p className="font-heading mb-3 text-sm font-bold uppercase text-rcb-gold">{label}</p>
       <h2 className="font-heading text-3xl font-bold text-white sm:text-4xl">{title}</h2>
       <p className="mt-4 max-w-2xl text-base leading-8 text-zinc-400">{copy}</p>
+    </div>
+  );
+}
+
+function AnimatedNumber({
+  value,
+  decimals = 0,
+  suffix = ""
+}: {
+  value: number;
+  decimals?: number;
+  suffix?: string;
+}) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const motionValue = useMotionValue(0);
+  const displayValue = useTransform(motionValue, (latest) => `${latest.toFixed(decimals)}${suffix}`);
+  const isInView = useInView(ref, { once: true, amount: 0.65 });
+
+  useEffect(() => {
+    if (!isInView) {
+      return;
+    }
+
+    const controls = animate(motionValue, value, {
+      duration: 1.4,
+      ease: "easeOut"
+    });
+
+    return controls.stop;
+  }, [isInView, motionValue, value]);
+
+  return <motion.span ref={ref}>{displayValue}</motion.span>;
+}
+
+function CareerStatsScorecard() {
+  return (
+    <div className="relative">
+      <div className="absolute inset-x-8 -top-5 h-px bg-gradient-to-r from-transparent via-rcb-gold to-transparent" />
+      <motion.div
+        whileHover={{ y: -6 }}
+        transition={{ type: "spring", stiffness: 190, damping: 18 }}
+        className="glass-panel stadium-card rounded-lg p-4"
+      >
+        <div className="scoreboard-flicker relative overflow-hidden rounded-lg border border-white/10 bg-pitch-charcoal p-5">
+          <div className="relative z-10 flex items-center justify-between border-b border-white/10 pb-4">
+            <div>
+              <p className="font-heading text-sm font-bold text-rcb-gold">LIVE SCORECARD</p>
+              <p className="mt-1 text-sm text-zinc-400">Full-stack innings in progress</p>
+            </div>
+            <Trophy className="text-rcb-gold drop-shadow-[0_0_12px_rgba(212,175,55,0.44)]" aria-hidden="true" size={24} />
+          </div>
+
+          <div className="relative z-10 grid gap-3 py-5 sm:grid-cols-2">
+            {careerStats.map(({ inningsLabel, label, value, suffix, decimals, detail, icon: Icon }) => (
+              <div
+                key={label}
+                className="stadium-card rounded-md border border-white/10 bg-white/5 p-4 backdrop-blur-md"
+              >
+                <div className="relative z-10 flex items-start justify-between gap-4">
+                  <div>
+                    <p className="font-heading text-[11px] font-bold uppercase text-rcb-gold/80">{inningsLabel}</p>
+                    <p className="font-heading mt-2 text-3xl font-bold text-white">
+                      <AnimatedNumber value={value} decimals={decimals} suffix={suffix} />
+                    </p>
+                    <p className="mt-1 text-sm font-semibold text-zinc-300">{label}</p>
+                  </div>
+                  <Icon aria-hidden="true" size={20} className="mt-1 shrink-0 text-rcb-gold" />
+                </div>
+                <p className="relative z-10 mt-3 text-xs leading-5 text-zinc-500">{detail}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="relative z-10 rounded-md border border-rcb-crimson/35 bg-rcb-crimson/10 p-4 shadow-[0_0_24px_rgba(220,38,38,0.08)]">
+            <p className="font-heading text-lg font-bold text-white">Current Crease</p>
+            <p className="mt-2 leading-7 text-zinc-300">
+              Designing clean product flows, secure backends, and frontend systems that feel fast from the first click.
+            </p>
+          </div>
+        </div>
+      </motion.div>
     </div>
   );
 }
@@ -116,7 +282,7 @@ function AccessFlowCard() {
         onMouseLeave={handleMouseLeave}
         whileHover={{ y: -8 }}
         transition={{ type: "spring", stiffness: 180, damping: 18 }}
-        className="glass-panel group relative overflow-hidden rounded-lg p-6 sm:p-8"
+        className="glass-panel stadium-card group relative overflow-hidden rounded-lg p-6 sm:p-8"
       >
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_0%,rgba(212,175,55,0.2),transparent_30%),linear-gradient(135deg,rgba(220,38,38,0.16),transparent_46%)] opacity-80" />
         <div className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-rcb-gold to-transparent opacity-80" />
@@ -135,12 +301,12 @@ function AccessFlowCard() {
 
           <div className="grid gap-4">
             <div className="grid gap-3 sm:grid-cols-2">
-              <div className="rounded-md border border-white/10 bg-pitch-charcoal/80 p-4 backdrop-blur-md">
+              <div className="stadium-card rounded-md border border-white/10 bg-pitch-charcoal/80 p-4 backdrop-blur-md">
                 <ScanLine className="text-rcb-gold" aria-hidden="true" size={22} />
                 <p className="font-heading mt-4 text-lg font-bold text-white">QR Access</p>
                 <p className="mt-2 text-sm leading-6 text-zinc-400">Visitor entry flows and approval gates.</p>
               </div>
-              <div className="rounded-md border border-white/10 bg-pitch-charcoal/80 p-4 backdrop-blur-md">
+              <div className="stadium-card rounded-md border border-white/10 bg-pitch-charcoal/80 p-4 backdrop-blur-md">
                 <Smartphone className="text-rcb-gold" aria-hidden="true" size={22} />
                 <p className="font-heading mt-4 text-lg font-bold text-white">Web + Mobile</p>
                 <p className="mt-2 text-sm leading-6 text-zinc-400">Dedicated interfaces for teams in motion.</p>
@@ -151,7 +317,7 @@ function AccessFlowCard() {
               target="_blank"
               rel="noopener noreferrer"
               whileTap={{ scale: 0.98 }}
-              className="focus-ring inline-flex items-center justify-center gap-2 rounded-md bg-rcb-gold px-5 py-3 text-sm font-bold text-pitch-black transition hover:bg-white"
+              className="focus-ring glow-button inline-flex items-center justify-center gap-2 rounded-md bg-rcb-gold px-5 py-3 text-sm font-bold text-pitch-black transition hover:bg-white"
             >
               Open Live Build
               <ExternalLink aria-hidden="true" size={18} />
@@ -191,6 +357,59 @@ function AccessFlowCard() {
   );
 }
 
+function RecentInningsSection() {
+  return (
+    <section id="recent-innings" className="section-shell relative z-10 scroll-mt-28 py-20">
+      <SectionHeading
+        label="Recent Innings"
+        title="Recent delivery milestones."
+        copy="A focused timeline of recent product, backend, and problem-solving progress without turning the portfolio into a novelty scoreboard."
+      />
+
+      <motion.div
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, amount: 0.2 }}
+        variants={{
+          hidden: {},
+          show: {
+            transition: {
+              staggerChildren: 0.08
+            }
+          }
+        }}
+        className="relative mt-12 grid gap-4"
+      >
+        <div className="absolute left-5 top-5 hidden h-[calc(100%-2.5rem)] w-px bg-gradient-to-b from-rcb-gold/75 via-white/15 to-rcb-crimson/30 sm:block" />
+        {recentInnings.map(({ title, description, icon: Icon }, index) => (
+          <motion.article
+            key={title}
+            variants={{
+              hidden: { opacity: 0, y: 20 },
+              show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
+            }}
+            className="grid gap-4 sm:grid-cols-[42px_1fr] sm:items-start"
+          >
+            <div className="relative z-10 hidden h-10 w-10 items-center justify-center rounded-md border border-rcb-gold/35 bg-pitch-black text-rcb-gold shadow-[0_0_24px_rgba(212,175,55,0.18)] sm:flex">
+              <Icon aria-hidden="true" size={18} />
+            </div>
+            <div className="stadium-card rounded-lg border border-white/10 bg-white/[0.045] p-5 backdrop-blur-xl sm:p-6">
+              <div className="relative z-10 flex items-start justify-between gap-5">
+                <div>
+                  <p className="font-heading text-xs font-bold uppercase text-rcb-gold/80">Over {index + 1}</p>
+                  <h3 className="font-heading mt-2 text-xl font-bold text-white">{title}</h3>
+                </div>
+                <Icon aria-hidden="true" size={20} className="shrink-0 text-rcb-gold sm:hidden" />
+              </div>
+              <p className="relative z-10 mt-3 max-w-3xl leading-7 text-zinc-300">{description}</p>
+            </div>
+          </motion.article>
+        ))}
+      </motion.div>
+    </section>
+  );
+}
+
 function TrophyTimelineItem({
   item,
   index
@@ -210,13 +429,31 @@ function TrophyTimelineItem({
     <motion.div ref={ref} style={{ opacity, y }} className="relative grid gap-4 pl-10 sm:grid-cols-[120px_1fr] sm:gap-6 sm:pl-14">
       <div className="absolute left-[7px] top-2 h-4 w-4 rounded-full border border-rcb-gold bg-pitch-black shadow-rcb-glow sm:left-[15px]" />
       <div className="font-heading text-sm font-bold text-rcb-gold sm:pt-1">{item.year}</div>
-      <div className="rounded-lg border border-white/10 bg-white/[0.045] p-5 backdrop-blur-xl">
-        <div className="flex items-start justify-between gap-4">
+      <div
+        className={`stadium-card rounded-lg border p-5 backdrop-blur-xl ${
+          item.highlight
+            ? "border-rcb-gold/35 bg-[linear-gradient(135deg,rgba(212,175,55,0.105),rgba(220,38,38,0.075),rgba(255,255,255,0.035))] shadow-[0_24px_70px_rgba(0,0,0,0.35),0_0_34px_rgba(212,175,55,0.16)]"
+            : "border-white/10 bg-white/[0.045]"
+        }`}
+      >
+        <div className="relative z-10 flex items-start justify-between gap-4">
           <div>
+            <div className="mb-3 flex flex-wrap items-center gap-2">
+              <span
+                className={`font-heading inline-flex items-center gap-1.5 rounded-md border px-2.5 py-1 text-[11px] font-bold uppercase ${
+                  item.highlight
+                    ? "border-rcb-gold/50 bg-rcb-gold text-pitch-black"
+                    : "border-white/10 bg-white/5 text-rcb-gold"
+                }`}
+              >
+                {item.highlight ? <Star aria-hidden="true" size={12} /> : <Award aria-hidden="true" size={12} />}
+                {item.rarity}
+              </span>
+            </div>
             <p className="font-heading text-xl font-bold text-white">{item.title}</p>
             <p className="mt-2 text-sm font-semibold uppercase text-zinc-500">{item.issuer}</p>
           </div>
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-rcb-gold text-pitch-black">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-rcb-gold text-pitch-black shadow-[0_0_22px_rgba(212,175,55,0.32)]">
             {index === trophies.length - 1 ? (
               <Code2 aria-hidden="true" size={20} />
             ) : (
@@ -224,7 +461,7 @@ function TrophyTimelineItem({
             )}
           </div>
         </div>
-        <p className="mt-4 leading-7 text-zinc-300">{item.result}</p>
+        <p className="relative z-10 mt-4 leading-7 text-zinc-300">{item.result}</p>
       </div>
     </motion.div>
   );
@@ -274,7 +511,7 @@ function SponsorTicket() {
             <div>
               <p className="font-heading text-xs font-bold uppercase text-rcb-gold">VIP Pavilion Pass</p>
               <h2 className="font-heading mt-3 text-3xl font-bold text-white sm:text-4xl">
-                Sponsor the Next Innings
+                Recruiter Pavilion Pass
               </h2>
             </div>
             <div className="rounded-md border border-rcb-gold/45 bg-rcb-gold px-3 py-2 text-center text-pitch-black">
@@ -300,17 +537,16 @@ function SponsorTicket() {
 
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <p className="max-w-xl text-sm leading-6 text-zinc-400">
-              Back the next build, caffeine run, or bold little experiment from this developer dugout.
+              Open to software engineering roles, internships, and collaborative product teams.
             </p>
             <motion.a
-              href="#"
-              onClick={(event) => event.preventDefault()}
+              href="mailto:anshguptakmrn@gmail.com"
               whileHover={buttonHover}
               whileTap={{ scale: 0.95 }}
-              className="focus-ring inline-flex shrink-0 items-center justify-center gap-2 rounded-md bg-rcb-crimson px-5 py-3 text-sm font-bold text-white shadow-rcb-glow transition-colors hover:bg-red-500"
+              className="focus-ring glow-button inline-flex shrink-0 items-center justify-center gap-2 rounded-md bg-rcb-crimson px-5 py-3 text-sm font-bold text-white shadow-rcb-glow transition-colors hover:bg-red-500"
             >
-              Send a Tip
-              <Heart aria-hidden="true" size={18} />
+              Start a Conversation
+              <Mail aria-hidden="true" size={18} />
             </motion.a>
           </div>
         </div>
@@ -346,14 +582,14 @@ function Footer() {
         <div className="flex flex-wrap gap-3">
           <a
             href="mailto:anshguptakmrn@gmail.com"
-            className="focus-ring inline-flex items-center gap-2 rounded-md border border-white/10 bg-white/5 px-3 py-2 text-sm font-semibold text-zinc-300 transition hover:border-rcb-gold/45 hover:text-white"
+            className="focus-ring glow-button inline-flex items-center gap-2 rounded-md border border-white/10 bg-white/5 px-3 py-2 text-sm font-semibold text-zinc-300 transition hover:border-rcb-gold/45 hover:text-white"
           >
             <Mail aria-hidden="true" size={16} />
             Email
           </a>
           <a
             href="tel:+918643074602"
-            className="focus-ring inline-flex items-center gap-2 rounded-md border border-white/10 bg-white/5 px-3 py-2 text-sm font-semibold text-zinc-300 transition hover:border-rcb-gold/45 hover:text-white"
+            className="focus-ring glow-button inline-flex items-center gap-2 rounded-md border border-white/10 bg-white/5 px-3 py-2 text-sm font-semibold text-zinc-300 transition hover:border-rcb-gold/45 hover:text-white"
           >
             <Phone aria-hidden="true" size={16} />
             +91 8643074602
@@ -362,7 +598,7 @@ function Footer() {
             href="https://github.com/digitaldodo"
             target="_blank"
             rel="noopener noreferrer"
-            className="focus-ring inline-flex items-center gap-2 rounded-md border border-white/10 bg-white/5 px-3 py-2 text-sm font-semibold text-zinc-300 transition hover:border-rcb-gold/45 hover:text-white"
+            className="focus-ring glow-button inline-flex items-center gap-2 rounded-md border border-white/10 bg-white/5 px-3 py-2 text-sm font-semibold text-zinc-300 transition hover:border-rcb-gold/45 hover:text-white"
           >
             <GitHubIcon />
             GitHub
@@ -378,6 +614,7 @@ export default function Home() {
     <main className="relative min-h-screen overflow-hidden bg-pitch-black text-white">
       <Navigation />
       <PitchScrollTracker />
+      <AmbientLighting />
 
       <div className="pitch-grid pointer-events-none fixed inset-0 z-0" />
       <div className="pointer-events-none fixed inset-x-0 top-0 z-0 h-24 border-b border-white/5 bg-gradient-to-b from-rcb-crimson/20 to-transparent" />
@@ -386,6 +623,15 @@ export default function Home() {
         id="home"
         className="section-shell relative z-10 grid min-h-screen items-center gap-12 pb-20 pt-32 lg:grid-cols-[1.05fr_0.95fr]"
       >
+        <motion.div
+          initial={{ y: -14, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ ...batSwingTransition, delay: 0.06 }}
+          className="min-w-0 lg:col-span-2"
+        >
+          <LiveMatchStrip />
+        </motion.div>
+
         <div>
           <motion.div
             initial={{ x: -50, opacity: 0 }}
@@ -425,13 +671,13 @@ export default function Home() {
             initial={{ x: -50, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ ...batSwingTransition, delay: 0.24 }}
-            className="mt-9 flex flex-col gap-3 sm:flex-row"
+            className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap"
           >
             <motion.a
               whileHover={buttonHover}
               whileTap={{ scale: 0.98 }}
               href="#projects"
-              className="focus-ring inline-flex items-center justify-center gap-2 rounded-md bg-rcb-crimson px-5 py-3 text-sm font-bold text-white shadow-rcb-glow transition-colors hover:bg-red-500"
+              className="focus-ring glow-button inline-flex items-center justify-center gap-2 rounded-md bg-rcb-crimson px-5 py-3 text-sm font-bold text-white shadow-rcb-glow transition-colors hover:bg-red-500"
             >
               View Match Highlights
               <ArrowUpRight aria-hidden="true" size={18} />
@@ -440,10 +686,37 @@ export default function Home() {
               whileHover={buttonHover}
               whileTap={{ scale: 0.98 }}
               href="#sponsor"
-              className="focus-ring inline-flex items-center justify-center gap-2 rounded-md border border-white/10 bg-white/5 px-5 py-3 text-sm font-bold text-zinc-100 backdrop-blur-md transition-colors hover:border-rcb-crimson/70 hover:text-white"
+              className="focus-ring glow-button inline-flex items-center justify-center gap-2 rounded-md border border-white/10 bg-white/5 px-5 py-3 text-sm font-bold text-zinc-100 backdrop-blur-md transition-colors hover:border-rcb-crimson/70 hover:text-white"
             >
-              Sponsor My Work
+              Contact Me
               <Mail aria-hidden="true" size={18} />
+            </motion.a>
+            <div className="group relative w-full sm:w-auto">
+              <motion.a
+                whileHover={buttonHover}
+                whileTap={{ scale: 0.98 }}
+                href={resumePath}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="focus-ring glow-button inline-flex h-12 w-full items-center justify-center gap-2 rounded-md border border-rcb-gold/45 bg-rcb-gold/10 px-5 py-3 text-sm font-bold text-rcb-gold backdrop-blur-md transition-colors hover:border-rcb-gold hover:bg-rcb-gold hover:text-pitch-black sm:w-auto"
+              >
+                View Resume
+                <Eye aria-hidden="true" size={18} />
+              </motion.a>
+              <div className="pointer-events-none absolute left-0 top-[calc(100%+0.75rem)] z-20 hidden w-64 rounded-lg border border-white/10 bg-pitch-charcoal/95 p-4 text-left opacity-0 shadow-[0_20px_60px_rgba(0,0,0,0.42),0_0_24px_rgba(212,175,55,0.15)] backdrop-blur-xl transition duration-200 group-hover:translate-y-0 group-hover:opacity-100 md:block md:translate-y-1">
+                <p className="font-heading text-sm font-bold text-white">Ansh Gupta Resume</p>
+                <p className="mt-1 text-xs leading-5 text-zinc-400">PDF resume with education, project work, technical skills, certifications, and contact details.</p>
+              </div>
+            </div>
+            <motion.a
+              whileHover={buttonHover}
+              whileTap={{ scale: 0.98 }}
+              href={resumePath}
+              download="Ansh_Gupta_Resume.pdf"
+              className="focus-ring glow-button inline-flex h-12 items-center justify-center gap-2 rounded-md bg-rcb-gold px-5 py-3 text-sm font-bold text-pitch-black transition-colors hover:bg-white"
+            >
+              Download Resume
+              <Download aria-hidden="true" size={18} />
             </motion.a>
             <motion.a
               whileHover={buttonHover}
@@ -452,47 +725,14 @@ export default function Home() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Open GitHub profile"
-              className="focus-ring inline-flex h-12 w-full items-center justify-center rounded-md border border-white/10 bg-white/5 text-zinc-100 backdrop-blur-md transition-colors hover:border-rcb-crimson/70 hover:text-white sm:w-12"
+              className="focus-ring glow-button inline-flex h-12 w-full items-center justify-center rounded-md border border-white/10 bg-white/5 text-zinc-100 backdrop-blur-md transition-colors hover:border-rcb-crimson/70 hover:text-white sm:w-12"
             >
               <GitHubIcon />
             </motion.a>
           </motion.div>
         </div>
 
-        <div className="relative">
-          <div className="absolute inset-x-8 -top-5 h-px bg-gradient-to-r from-transparent via-rcb-gold to-transparent" />
-          <div className="glass-panel rounded-lg p-4">
-            <div className="rounded-lg border border-white/10 bg-pitch-charcoal p-5">
-              <div className="flex items-center justify-between border-b border-white/10 pb-4">
-                <div>
-                  <p className="font-heading text-sm font-bold text-rcb-gold">LIVE SCORECARD</p>
-                  <p className="mt-1 text-sm text-zinc-400">Full-stack innings in progress</p>
-                </div>
-                <Trophy className="text-rcb-gold" aria-hidden="true" size={24} />
-              </div>
-
-              <div className="grid gap-3 py-5 sm:grid-cols-3">
-                {[
-                  ["8.43", "CGPA"],
-                  ["Top 1%", "NPTEL"],
-                  ["200+", "Problems"]
-                ].map(([value, label]) => (
-                  <div key={label} className="rounded-md border border-white/10 bg-white/5 p-4 backdrop-blur-md">
-                    <p className="font-heading text-3xl font-bold text-white">{value}</p>
-                    <p className="mt-1 text-sm text-zinc-400">{label}</p>
-                  </div>
-                ))}
-              </div>
-
-              <div className="rounded-md border border-rcb-crimson/35 bg-rcb-crimson/10 p-4">
-                <p className="font-heading text-lg font-bold text-white">Current Crease</p>
-                <p className="mt-2 leading-7 text-zinc-300">
-                  Designing clean product flows, secure backends, and frontend systems that feel fast from the first click.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
+        <CareerStatsScorecard />
       </section>
 
       <motion.section
@@ -531,6 +771,8 @@ export default function Home() {
         <AccessFlowCard />
       </section>
 
+      <RecentInningsSection />
+
       <section id="trophy-cabinet" className="section-shell relative z-10 scroll-mt-28 py-20">
         <SectionHeading
           label="Trophy Cabinet"
@@ -556,21 +798,21 @@ export default function Home() {
             <div className="grid gap-3 sm:grid-cols-2">
               <a
                 href="mailto:anshguptakmrn@gmail.com"
-                className="focus-ring rounded-lg border border-white/10 bg-white/5 p-5 backdrop-blur-md transition hover:-translate-y-0.5 hover:border-rcb-gold/45"
+                className="focus-ring stadium-card rounded-lg border border-white/10 bg-white/5 p-5 backdrop-blur-md transition hover:-translate-y-0.5 hover:border-rcb-gold/45"
               >
-                <Mail className="mb-4 text-rcb-gold" aria-hidden="true" size={22} />
-                <p className="font-heading font-bold text-white">Email</p>
-                <p className="mt-2 break-all text-sm text-zinc-400">anshguptakmrn@gmail.com</p>
+                <Mail className="relative z-10 mb-4 text-rcb-gold" aria-hidden="true" size={22} />
+                <p className="font-heading relative z-10 font-bold text-white">Email</p>
+                <p className="relative z-10 mt-2 break-all text-sm text-zinc-400">anshguptakmrn@gmail.com</p>
               </a>
               <a
                 href="https://github.com/digitaldodo"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="focus-ring rounded-lg border border-white/10 bg-white/5 p-5 backdrop-blur-md transition hover:-translate-y-0.5 hover:border-rcb-gold/45"
+                className="focus-ring stadium-card rounded-lg border border-white/10 bg-white/5 p-5 backdrop-blur-md transition hover:-translate-y-0.5 hover:border-rcb-gold/45"
               >
-                <Code2 className="mb-4 text-rcb-gold" aria-hidden="true" size={22} />
-                <p className="font-heading font-bold text-white">GitHub</p>
-                <p className="mt-2 break-all text-sm text-zinc-400">github.com/digitaldodo</p>
+                <Code2 className="relative z-10 mb-4 text-rcb-gold" aria-hidden="true" size={22} />
+                <p className="font-heading relative z-10 font-bold text-white">GitHub</p>
+                <p className="relative z-10 mt-2 break-all text-sm text-zinc-400">github.com/digitaldodo</p>
               </a>
             </div>
           </div>

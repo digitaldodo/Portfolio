@@ -57,6 +57,138 @@ a {
   backdrop-filter: blur(18px);
 }
 
+.stadium-ambient-glow {
+  pointer-events: none;
+  position: fixed;
+  left: -170px;
+  top: -170px;
+  z-index: 1;
+  width: 340px;
+  height: 340px;
+  border-radius: 9999px;
+  opacity: 0;
+  background:
+    radial-gradient(circle, rgba(212, 175, 55, 0.14) 0%, rgba(220, 38, 38, 0.08) 34%, transparent 68%);
+  filter: blur(10px);
+  mix-blend-mode: screen;
+  transform: translate3d(50vw, 35vh, 0);
+  transition: opacity 220ms ease;
+  will-change: transform, opacity;
+}
+
+.stadium-card {
+  position: relative;
+  overflow: hidden;
+  transition:
+    border-color 220ms ease,
+    box-shadow 220ms ease,
+    transform 220ms ease,
+    background-color 220ms ease;
+}
+
+.stadium-card::after {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.12), transparent 38%),
+    linear-gradient(135deg, rgba(220, 38, 38, 0.08), transparent 48%);
+  transition: opacity 220ms ease;
+}
+
+.stadium-card:hover {
+  border-color: rgba(212, 175, 55, 0.32);
+  box-shadow:
+    0 24px 70px rgba(0, 0, 0, 0.34),
+    0 0 26px rgba(212, 175, 55, 0.13),
+    0 0 20px rgba(220, 38, 38, 0.08);
+  transform: translateY(-3px);
+}
+
+.stadium-card:hover::after {
+  opacity: 1;
+}
+
+.glow-button {
+  position: relative;
+  overflow: hidden;
+}
+
+.glow-button::after {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: -40% auto -40% -70%;
+  width: 45%;
+  transform: skewX(-18deg);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.28), transparent);
+  opacity: 0;
+  transition:
+    transform 520ms ease,
+    opacity 220ms ease;
+}
+
+.glow-button:hover::after {
+  opacity: 1;
+  transform: translateX(430%) skewX(-18deg);
+}
+
+.live-match-strip {
+  isolation: isolate;
+}
+
+.ticker-track {
+  animation: ticker-scroll 32s linear infinite;
+}
+
+.live-match-strip:hover .ticker-track {
+  animation-play-state: paused;
+}
+
+.scoreboard-flicker {
+  position: relative;
+}
+
+.scoreboard-flicker::before {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.035), transparent);
+  opacity: 0.45;
+  animation: scoreboard-scan 4.8s ease-in-out infinite;
+}
+
+@keyframes ticker-scroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes scoreboard-scan {
+  0%,
+  88%,
+  100% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+
+  92% {
+    opacity: 0.45;
+  }
+
+  96% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+}
+
 .focus-ring {
   outline: none;
 }
@@ -65,10 +197,36 @@ a {
   box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.36);
 }
 
+.nav-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.nav-scrollbar::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
 .pitch-grid {
   background-image:
     linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
   background-size: 72px 72px;
   mask-image: linear-gradient(to bottom, black 0%, black 68%, transparent 100%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+
+  .stadium-ambient-glow {
+    display: none;
+  }
 }
