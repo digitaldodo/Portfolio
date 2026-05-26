@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import {
   BriefcaseBusiness,
   Clock3,
@@ -27,6 +28,7 @@ const navItems = [
 ];
 
 const resumePath = "/assets/Ansh_Gupta_Resume.pdf";
+const logoPath = "/assets/ag-logo.svg";
 
 export function Navigation() {
   const [activeHref, setActiveHref] = useState("#home");
@@ -68,10 +70,10 @@ export function Navigation() {
       <nav className="section-shell glass-panel flex min-h-16 items-center justify-between gap-2 rounded-lg px-3 py-2">
         <a
           href="#home"
-          className="focus-ring font-heading rounded-md px-2 text-base font-bold text-white"
+          className="focus-ring inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-md"
           aria-label="Go to home"
         >
-          AG<span className="text-rcb-gold">.</span>
+          <Image src={logoPath} alt="" width={44} height={44} className="portfolio-logo h-11 w-11" priority />
         </a>
 
         <div className="nav-scrollbar flex flex-1 items-center justify-center gap-1 overflow-x-auto px-1">

@@ -22,6 +22,7 @@ import {
   Zap
 } from "lucide-react";
 import { animate, motion, useInView, useMotionValue, useScroll, useTransform } from "framer-motion";
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import type { MouseEvent } from "react";
 import { AmbientLighting } from "./components/AmbientLighting";
@@ -146,6 +147,7 @@ const recentInnings = [
 ];
 
 const resumePath = "/assets/Ansh_Gupta_Resume.pdf";
+const logoPath = "/assets/ag-logo.svg";
 
 const batSwingTransition = { duration: 0.4, ease: "easeOut" as const };
 
@@ -633,6 +635,21 @@ export default function Home() {
         </motion.div>
 
         <div>
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ ...batSwingTransition, delay: 0.03 }}
+            className="hero-logo-shell mb-7 inline-flex h-20 w-20 items-center justify-center rounded-full border border-rcb-gold/30 bg-black/20 backdrop-blur-md sm:h-24 sm:w-24"
+          >
+            <Image
+              src={logoPath}
+              alt="Ansh Gupta logo"
+              width={92}
+              height={92}
+              className="portfolio-logo h-[4.6rem] w-[4.6rem] sm:h-[5.7rem] sm:w-[5.7rem]"
+              priority
+            />
+          </motion.div>
           <motion.div
             initial={{ x: -50, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}

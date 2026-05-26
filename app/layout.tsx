@@ -18,7 +18,11 @@ export const metadata: Metadata = {
   title: "Ansh Gupta | Developer Portfolio",
   description:
     "Premium developer portfolio inspired by Silicon Valley product craft and Royal Challengers Bangalore energy.",
-  metadataBase: new URL("https://example.com")
+  metadataBase: new URL("https://example.com"),
+  icons: {
+    icon: "/assets/ag-logo.svg",
+    apple: "/assets/ag-logo.svg"
+  }
 };
 
 export default function RootLayout({
