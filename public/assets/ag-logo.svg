@@ -1,98 +1,67 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
-  <title id="title">Ansh Gupta monogram logo</title>
-  <desc id="desc">A gold circular AG monogram with a subtle crimson glow on a transparent background.</desc>
+  <title id="title">Ansh Gupta AG performance monogram</title>
+  <desc id="desc">A sharp matte black AG monogram with gold geometry and a deep red performance accent.</desc>
   <defs>
-    <radialGradient id="coin-face" cx="33%" cy="24%" r="72%">
-      <stop offset="0" stop-color="#fff4b8" />
-      <stop offset="0.32" stop-color="#e8c858" />
-      <stop offset="0.62" stop-color="#c48b24" />
-      <stop offset="1" stop-color="#735017" />
-    </radialGradient>
-    <linearGradient id="gold-edge" x1="90" x2="420" y1="60" y2="452" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#fff2a8" />
-      <stop offset="0.44" stop-color="#d4af37" />
-      <stop offset="0.72" stop-color="#8d641c" />
-      <stop offset="1" stop-color="#f7da72" />
+    <linearGradient id="gold-stroke" x1="92" x2="420" y1="70" y2="450" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff0a3" />
+      <stop offset="0.33" stop-color="#d4af37" />
+      <stop offset="0.68" stop-color="#9a6f20" />
+      <stop offset="1" stop-color="#f4d875" />
     </linearGradient>
-    <linearGradient id="inner-shadow" x1="118" x2="400" y1="116" y2="398" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#4d0715" />
-      <stop offset="0.55" stop-color="#140b0c" />
-      <stop offset="1" stop-color="#68141d" />
+    <linearGradient id="matte-core" x1="110" x2="408" y1="90" y2="426" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#1a1a1a" />
+      <stop offset="0.5" stop-color="#080808" />
+      <stop offset="1" stop-color="#141414" />
     </linearGradient>
-    <filter id="crimson-glow" x="-26%" y="-26%" width="152%" height="152%">
-      <feGaussianBlur stdDeviation="13" result="blur" />
-      <feColorMatrix
-        in="blur"
-        type="matrix"
-        values="1 0 0 0 0.78  0 0.22 0 0 0.02  0 0 0.22 0 0.08  0 0 0 0.78 0"
-      />
-      <feMerge>
-        <feMergeNode />
-        <feMergeNode in="SourceGraphic" />
-      </feMerge>
+    <linearGradient id="red-cut" x1="330" x2="426" y1="120" y2="402" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ef4444" />
+      <stop offset="0.58" stop-color="#9f1239" />
+      <stop offset="1" stop-color="#450a0a" />
+    </linearGradient>
+    <filter id="premium-depth" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="24" stdDeviation="22" flood-color="#000000" flood-opacity="0.48" />
+      <feDropShadow dx="0" dy="0" stdDeviation="8" flood-color="#d4af37" flood-opacity="0.22" />
+      <feDropShadow dx="0" dy="0" stdDeviation="12" flood-color="#dc2626" flood-opacity="0.12" />
     </filter>
-    <filter id="soft-depth" x="-8%" y="-8%" width="116%" height="116%">
-      <feDropShadow dx="0" dy="16" stdDeviation="14" flood-color="#000000" flood-opacity="0.46" />
-      <feDropShadow dx="0" dy="-2" stdDeviation="2" flood-color="#fff0a0" flood-opacity="0.38" />
-    </filter>
-    <clipPath id="coin-clip">
-      <circle cx="256" cy="256" r="188" />
-    </clipPath>
   </defs>
 
-  <g filter="url(#crimson-glow)">
-    <circle cx="256" cy="256" r="214" fill="#8f0e21" opacity="0.18" />
-  </g>
+  <g filter="url(#premium-depth)">
+    <path
+      d="M256 34 426 118v176c0 80-49 134-170 184C135 428 86 374 86 294V118L256 34Z"
+      fill="url(#gold-stroke)"
+    />
+    <path
+      d="M256 58 402 131v160c0 66-39 111-146 157-107-46-146-91-146-157V131L256 58Z"
+      fill="url(#matte-core)"
+    />
+    <path
+      d="M256 82 378 142v145c0 54-31 91-122 132-91-41-122-78-122-132V142L256 82Z"
+      fill="none"
+      stroke="#d4af37"
+      stroke-width="6"
+      opacity="0.55"
+    />
 
-  <g filter="url(#soft-depth)">
-    <circle cx="256" cy="256" r="202" fill="url(#gold-edge)" />
-    <circle cx="256" cy="256" r="184" fill="url(#inner-shadow)" stroke="#f4d975" stroke-width="10" />
-    <circle cx="256" cy="256" r="165" fill="none" stroke="#2c1110" stroke-width="5" />
-    <circle cx="256" cy="256" r="153" fill="none" stroke="#d6af3b" stroke-width="5" opacity="0.82" />
-    <circle cx="256" cy="256" r="143" fill="none" stroke="#2c1110" stroke-width="5" opacity="0.82" />
-
-    <g clip-path="url(#coin-clip)">
-      <path
-        d="M252 108H207c-67 34-111 101-111 176 0 41 13 80 38 113h52l33-58h-46c-11-17-18-36-20-57h68v115h31V108Z"
-        fill="url(#coin-face)"
-      />
-      <path d="M176 226c14-26 35-48 64-65v65H176Z" fill="#36100f" opacity="0.82" />
-      <path d="M168 306h50l-34 58c-16-16-28-35-36-58h20Z" fill="#36100f" opacity="0.82" />
-      <path
-        d="M274 108h33v107l76-107h45l-74 101h52c20 25 31 56 31 89 0 37-14 72-39 99h-96v-58h74c7-13 10-27 10-41 0-11-2-22-6-32h-73v131h-33V108Z"
-        fill="url(#coin-face)"
-      />
-      <path d="M307 163v57h-40l40-57Z" fill="#36100f" opacity="0.78" />
-      <path
-        d="M160 112c31-25 72-39 114-39 68 0 127 35 160 88"
-        fill="none"
-        stroke="#1b0f0e"
-        stroke-linecap="round"
-        stroke-width="9"
-        opacity="0.82"
-      />
-      <path
-        d="M169 126c29-22 65-33 105-33 59 0 111 30 141 75"
-        fill="none"
-        stroke="#e5c752"
-        stroke-linecap="round"
-        stroke-width="8"
-      />
-      <path
-        d="M352 118l-80 112"
-        fill="none"
-        stroke="#f4d975"
-        stroke-linecap="round"
-        stroke-width="23"
-      />
-      <path
-        d="M361 119l-83 116"
-        fill="none"
-        stroke="#2a0f0f"
-        stroke-linecap="round"
-        stroke-width="8"
-        opacity="0.42"
-      />
-    </g>
+    <path
+      d="M154 354 224 144h46l72 210h-43l-13-41h-83l-13 41h-36Zm62-83h57l-28-88-29 88Z"
+      fill="url(#gold-stroke)"
+    />
+    <path
+      d="M286 354V144h66c46 0 79 29 79 73 0 28-13 51-35 63l38 74h-46l-32-64h-29v64h-41Zm41-101h24c21 0 38-16 38-36s-17-36-38-36h-24v72Z"
+      fill="url(#gold-stroke)"
+    />
+    <path
+      d="M367 122h35L318 390h-35l84-268Z"
+      fill="url(#red-cut)"
+      opacity="0.92"
+    />
+    <path
+      d="M158 388h184"
+      fill="none"
+      stroke="#d4af37"
+      stroke-linecap="square"
+      stroke-width="10"
+      opacity="0.72"
+    />
   </g>
 </svg>

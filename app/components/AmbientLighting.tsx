@@ -49,5 +49,5 @@ export function AmbientLighting() {
     };
   }, []);
 
-  return <div ref={glowRef} aria-hidden="true" className="stadium-ambient-glow" />;
+  return <div ref={glowRef} aria-hidden="true" className="cursor-ambient-glow" />;
 }

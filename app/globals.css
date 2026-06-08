@@ -6,7 +6,9 @@
   --foreground: #f8fafc;
   --muted: #a1a1aa;
   --gold: #d4af37;
+  --gold-soft: #f2d675;
   --crimson: #dc2626;
+  --crimson-deep: #7f1018;
   --glass: rgba(255, 255, 255, 0.05);
   --glass-line: rgba(255, 255, 255, 0.1);
 }
@@ -18,6 +20,7 @@
 html {
   min-height: 100%;
   scroll-behavior: smooth;
+  scroll-padding-top: 7rem;
   background: var(--background);
 }
 
@@ -25,11 +28,42 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
   background:
-    linear-gradient(118deg, rgba(220, 38, 38, 0.16) 0%, transparent 24%),
-    linear-gradient(242deg, rgba(212, 175, 55, 0.13) 0%, transparent 22%),
-    linear-gradient(180deg, #0a0a0a 0%, #111111 48%, #070707 100%);
+    radial-gradient(circle at 14% 8%, rgba(220, 38, 38, 0.18), transparent 27rem),
+    radial-gradient(circle at 88% 4%, rgba(212, 175, 55, 0.14), transparent 25rem),
+    radial-gradient(circle at 72% 58%, rgba(127, 16, 24, 0.18), transparent 30rem),
+    linear-gradient(118deg, rgba(220, 38, 38, 0.12) 0%, transparent 24%),
+    linear-gradient(242deg, rgba(212, 175, 55, 0.1) 0%, transparent 22%),
+    linear-gradient(180deg, #080808 0%, #111111 44%, #060606 100%);
   color: var(--foreground);
   font-family: var(--font-inter), Arial, Helvetica, sans-serif;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior-y: none;
+}
+
+body::before,
+body::after {
+  content: "";
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+}
+
+body::before {
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(rgba(255, 255, 255, 0.026) 1px, transparent 1px),
+    radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.05), transparent 34rem);
+  background-size: 144px 144px, 144px 144px, auto;
+  mask-image: linear-gradient(to bottom, black 0%, rgba(0, 0, 0, 0.7) 58%, transparent 100%);
+}
+
+body::after {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 18%, transparent 78%, rgba(0, 0, 0, 0.34)),
+    radial-gradient(ellipse at center, transparent 0%, transparent 48%, rgba(0, 0, 0, 0.54) 100%);
+  mix-blend-mode: soft-light;
 }
 
 ::selection {
@@ -50,19 +84,54 @@ a {
   margin-inline: auto;
 }
 
+main > section {
+  isolation: isolate;
+}
+
+main > section::before {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0 auto auto 50%;
+  width: min(720px, 78vw);
+  height: 1px;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.18), rgba(255, 255, 255, 0.11), transparent);
+  opacity: 0.78;
+}
+
 .glass-panel {
   border: 1px solid var(--glass-line);
-  background: var(--glass);
-  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.32);
+  background:
+    radial-gradient(circle at 18% 0%, rgba(255, 255, 255, 0.075), transparent 28rem),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.035)),
+    var(--glass);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.055),
+    inset 0 -20px 42px rgba(255, 255, 255, 0.018),
+    0 24px 80px rgba(0, 0, 0, 0.36);
   backdrop-filter: blur(18px);
+}
+
+.nav-shell {
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.095), rgba(255, 255, 255, 0.045)),
+    rgba(7, 7, 7, 0.76);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.07),
+    0 22px 70px rgba(0, 0, 0, 0.42),
+    0 0 28px rgba(212, 175, 55, 0.08),
+    0 0 30px rgba(220, 38, 38, 0.07);
+  backdrop-filter: blur(20px);
 }
 
 .portfolio-logo {
   display: block;
   object-fit: contain;
   filter:
-    drop-shadow(0 0 10px rgba(212, 175, 55, 0.18))
-    drop-shadow(0 0 18px rgba(220, 38, 38, 0.22));
+    drop-shadow(0 0 8px rgba(212, 175, 55, 0.16))
+    drop-shadow(0 0 14px rgba(220, 38, 38, 0.16));
 }
 
 .hero-logo-shell {
@@ -72,26 +141,26 @@ a {
     0 0 34px rgba(220, 38, 38, 0.16);
 }
 
-.stadium-ambient-glow {
+.cursor-ambient-glow {
   pointer-events: none;
   position: fixed;
-  left: -170px;
-  top: -170px;
+  left: -190px;
+  top: -190px;
   z-index: 1;
-  width: 340px;
-  height: 340px;
+  width: 380px;
+  height: 380px;
   border-radius: 9999px;
   opacity: 0;
   background:
-    radial-gradient(circle, rgba(212, 175, 55, 0.14) 0%, rgba(220, 38, 38, 0.08) 34%, transparent 68%);
-  filter: blur(10px);
+    radial-gradient(circle, rgba(242, 214, 117, 0.13) 0%, rgba(220, 38, 38, 0.095) 34%, rgba(127, 16, 24, 0.06) 52%, transparent 72%);
+  filter: blur(16px);
   mix-blend-mode: screen;
   transform: translate3d(50vw, 35vh, 0);
   transition: opacity 220ms ease;
   will-change: transform, opacity;
 }
 
-.stadium-card {
+.premium-card {
   position: relative;
   overflow: hidden;
   transition:
@@ -101,34 +170,76 @@ a {
     background-color 220ms ease;
 }
 
-.stadium-card::after {
+.premium-card::before {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  opacity: 0.46;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.055), transparent 28%),
+    radial-gradient(circle at 20% 0%, rgba(242, 214, 117, 0.08), transparent 32%);
+  transition: opacity 220ms ease;
+}
+
+.premium-card::after {
   content: "";
   pointer-events: none;
   position: absolute;
   inset: 0;
   opacity: 0;
   background:
-    radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.12), transparent 38%),
-    linear-gradient(135deg, rgba(220, 38, 38, 0.08), transparent 48%);
+    radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.105), transparent 38%),
+    linear-gradient(135deg, rgba(220, 38, 38, 0.065), transparent 48%);
   transition: opacity 220ms ease;
 }
 
-.stadium-card:hover {
+.premium-card:hover {
   border-color: rgba(212, 175, 55, 0.32);
   box-shadow:
-    0 24px 70px rgba(0, 0, 0, 0.34),
-    0 0 26px rgba(212, 175, 55, 0.13),
-    0 0 20px rgba(220, 38, 38, 0.08);
+    0 28px 76px rgba(0, 0, 0, 0.42),
+    0 0 24px rgba(212, 175, 55, 0.12),
+    0 0 18px rgba(220, 38, 38, 0.08);
   transform: translateY(-3px);
 }
 
-.stadium-card:hover::after {
+.premium-card:hover::before {
+  opacity: 0.84;
+}
+
+.premium-card:hover::after {
   opacity: 1;
 }
 
 .glow-button {
   position: relative;
   overflow: hidden;
+  isolation: isolate;
+  border-radius: 0.375rem;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.11),
+    0 12px 32px rgba(0, 0, 0, 0.24),
+    0 0 20px rgba(212, 175, 55, 0.08);
+  transition:
+    border-color 220ms ease,
+    background-color 220ms ease,
+    color 220ms ease,
+    box-shadow 220ms ease,
+    transform 220ms ease,
+    filter 220ms ease;
+}
+
+.glow-button::before {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: 0.42;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.18), transparent 32%),
+    linear-gradient(90deg, rgba(127, 16, 24, 0.18), rgba(212, 175, 55, 0.13));
+  transition: opacity 220ms ease;
 }
 
 .glow-button::after {
@@ -138,7 +249,7 @@ a {
   inset: -40% auto -40% -70%;
   width: 45%;
   transform: skewX(-18deg);
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.28), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
   opacity: 0;
   transition:
     transform 520ms ease,
@@ -150,30 +261,53 @@ a {
   transform: translateX(430%) skewX(-18deg);
 }
 
-.live-match-strip {
+.glow-button:hover {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    0 16px 40px rgba(0, 0, 0, 0.32),
+    0 0 24px rgba(212, 175, 55, 0.16),
+    0 0 22px rgba(220, 38, 38, 0.1);
+}
+
+.glow-button:hover::before {
+  opacity: 0.68;
+}
+
+.performance-strip {
   isolation: isolate;
+}
+
+.performance-strip::before {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 18% 0%, rgba(220, 38, 38, 0.13), transparent 34%),
+    radial-gradient(circle at 82% 100%, rgba(212, 175, 55, 0.12), transparent 34%);
+  opacity: 0.9;
 }
 
 .ticker-track {
   animation: ticker-scroll 32s linear infinite;
 }
 
-.live-match-strip:hover .ticker-track {
+.performance-strip:hover .ticker-track {
   animation-play-state: paused;
 }
 
-.scoreboard-flicker {
+.index-scan {
   position: relative;
 }
 
-.scoreboard-flicker::before {
+.index-scan::before {
   content: "";
   pointer-events: none;
   position: absolute;
   inset: 0;
   background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.035), transparent);
   opacity: 0.45;
-  animation: scoreboard-scan 4.8s ease-in-out infinite;
+  animation: index-scan 4.8s ease-in-out infinite;
 }
 
 @keyframes ticker-scroll {
@@ -186,7 +320,7 @@ a {
   }
 }
 
-@keyframes scoreboard-scan {
+@keyframes index-scan {
   0%,
   88%,
   100% {
@@ -223,35 +357,49 @@ a {
   height: 0;
 }
 
-.pitch-grid {
+.ambient-grid {
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
-  background-size: 72px 72px;
+    linear-gradient(rgba(255, 255, 255, 0.026) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.026) 1px, transparent 1px),
+    radial-gradient(circle at 48% 10%, rgba(212, 175, 55, 0.045), transparent 26rem),
+    linear-gradient(90deg, transparent 0%, rgba(212, 175, 55, 0.026) 49.8%, rgba(220, 38, 38, 0.026) 50.2%, transparent 100%);
+  background-size: 86px 86px, 86px 86px, auto, 100% 100%;
   mask-image: linear-gradient(to bottom, black 0%, black 68%, transparent 100%);
 }
 
-.pitch-scroll-ball {
+.mindset-spotlight::before {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: -20% -8%;
+  background:
+    radial-gradient(circle at 50% 8%, rgba(255, 255, 255, 0.12), transparent 20%),
+    linear-gradient(115deg, transparent 0%, rgba(212, 175, 55, 0.09) 38%, transparent 50%, rgba(220, 38, 38, 0.1) 64%, transparent 100%);
+  opacity: 0.86;
+  transform: rotate(-2deg);
+}
+
+.scroll-progress-marker {
   transform: translate3d(0, 0, 0);
 }
 
-.pitch-scroll-ball::before {
+.scroll-progress-marker::before {
   content: "";
   position: absolute;
   inset: -10px;
-  border-radius: 9999px;
+  border-radius: 4px;
   background: radial-gradient(circle, rgba(212, 175, 55, 0.28), rgba(220, 38, 38, 0.13) 42%, transparent 70%);
   opacity: 0.78;
   filter: blur(5px);
-  animation: pitch-scroll-pulse 2.6s ease-in-out infinite;
+  animation: scroll-progress-pulse 2.6s ease-in-out infinite;
 }
 
-.pitch-scroll-ball-core {
+.scroll-progress-marker-core {
   transform: rotate(0deg);
   transform-origin: center;
 }
 
-@keyframes pitch-scroll-pulse {
+@keyframes scroll-progress-pulse {
   0%,
   100% {
     transform: scale(0.92);
@@ -261,6 +409,37 @@ a {
   50% {
     transform: scale(1.18);
     opacity: 0.92;
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .premium-card:hover {
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.055),
+      0 18px 52px rgba(0, 0, 0, 0.34);
+    transform: none;
+  }
+
+  .glow-button:hover::after {
+    opacity: 0;
+  }
+}
+
+@media (max-width: 640px) {
+  html {
+    scroll-padding-top: 5.5rem;
+  }
+
+  .section-shell {
+    width: min(100% - 1.25rem, 1120px);
+  }
+
+  .glass-panel {
+    backdrop-filter: blur(14px);
+  }
+
+  .ticker-track {
+    animation-duration: 42s;
   }
 }
 
@@ -274,7 +453,7 @@ a {
     transition-duration: 0.001ms !important;
   }
 
-  .stadium-ambient-glow {
+  .cursor-ambient-glow {
     display: none;
   }
 }

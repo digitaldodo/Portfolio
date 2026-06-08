@@ -21,7 +21,7 @@ const skillGroups = [
   }
 ];
 
-const kitbagVariants = {
+const stackVariants = {
   hidden: {},
   show: {
     transition: {
@@ -50,21 +50,21 @@ const pillVariants = {
 export function SkillsSection() {
   return (
     <motion.section
-      id="kitbag"
+      id="stack"
       initial="hidden"
       whileInView="show"
       viewport={{ once: true, amount: 0.25 }}
       className="section-shell relative z-10 scroll-mt-28 py-20"
     >
-      <div className="relative overflow-hidden rounded-lg border border-white/10 bg-white/[0.035] px-5 py-8 shadow-rcb-glow backdrop-blur-xl sm:px-8 lg:px-10">
-        <div className="pointer-events-none absolute inset-x-6 top-8 h-px bg-gradient-to-r from-transparent via-rcb-gold to-transparent" />
-        <div className="pointer-events-none absolute left-1/2 top-8 h-20 w-px -translate-x-1/2 bg-gradient-to-b from-rcb-gold/80 to-transparent" />
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-rcb-crimson/10 to-transparent" />
+      <div className="relative overflow-hidden rounded-lg border border-white/10 bg-white/[0.035] px-5 py-8 shadow-premium-glow backdrop-blur-xl sm:px-8 lg:px-10">
+        <div className="pointer-events-none absolute inset-x-6 top-8 h-px bg-gradient-to-r from-transparent via-brand-gold to-transparent" />
+        <div className="pointer-events-none absolute left-1/2 top-8 h-20 w-px -translate-x-1/2 bg-gradient-to-b from-brand-gold/80 to-transparent" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-brand-crimson/10 to-transparent" />
 
         <div className="relative mx-auto max-w-4xl text-center">
           <motion.p
             variants={pillVariants}
-            className="font-heading inline-flex rounded-full border border-rcb-gold/40 bg-rcb-gold/10 px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-rcb-gold backdrop-blur-md"
+            className="font-heading inline-flex rounded-full border border-brand-gold/40 bg-brand-gold/10 px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-brand-gold backdrop-blur-md"
           >
             Technical Skills
           </motion.p>
@@ -72,16 +72,16 @@ export function SkillsSection() {
             variants={pillVariants}
             className="font-heading mt-5 text-4xl font-bold text-white sm:text-5xl"
           >
-            My Kitbag
+            Engineering Stack
           </motion.h2>
         </div>
 
-        <motion.div variants={kitbagVariants} className="relative mt-12 grid gap-8">
+        <motion.div variants={stackVariants} className="relative mt-12 grid gap-8">
           {skillGroups.map((group) => (
             <div key={group.category} className="grid gap-4 lg:grid-cols-[220px_1fr] lg:items-start">
               <motion.div
                 variants={pillVariants}
-                className="font-heading inline-flex w-fit rounded-full border border-white/10 bg-white/10 px-4 py-2 text-sm font-bold text-rcb-gold backdrop-blur-lg"
+                className="font-heading inline-flex w-fit rounded-full border border-white/10 bg-white/10 px-4 py-2 text-sm font-bold text-brand-gold backdrop-blur-lg"
               >
                 {group.category}
               </motion.div>
@@ -103,7 +103,7 @@ export function SkillsSection() {
                       borderColor: { duration: 0 },
                       boxShadow: { duration: 0 }
                     }}
-                    className="font-heading inline-flex cursor-default items-center rounded-full border border-white/15 bg-white/10 px-5 py-2.5 text-sm font-semibold text-zinc-100 backdrop-blur-xl hover:border-rcb-gold hover:shadow-[0_0_0_1px_rgba(212,175,55,0.9),0_0_24px_rgba(212,175,55,0.42)] sm:text-base"
+                    className="font-heading inline-flex cursor-default items-center rounded-full border border-white/15 bg-white/10 px-5 py-2.5 text-sm font-semibold text-zinc-100 backdrop-blur-xl hover:border-brand-gold hover:shadow-[0_0_0_1px_rgba(212,175,55,0.9),0_0_24px_rgba(212,175,55,0.42)] sm:text-base"
                   >
                     {skill}
                   </motion.span>

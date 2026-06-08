@@ -17,7 +17,7 @@ const spaceGrotesk = Space_Grotesk({
 export const metadata: Metadata = {
   title: "Ansh Gupta | Developer Portfolio",
   description:
-    "Premium developer portfolio inspired by Silicon Valley product craft and Royal Challengers Bangalore energy.",
+    "Premium developer portfolio for an elite software engineer focused on disciplined execution, scalable systems, and modern product craft.",
   metadataBase: new URL("https://example.com"),
   icons: {
     icon: "/assets/ag-logo.svg",

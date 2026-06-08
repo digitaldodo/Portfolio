@@ -10,12 +10,12 @@ const config = {
   theme: {
     extend: {
       colors: {
-        pitch: {
+        surface: {
           black: "#0A0A0A",
           charcoal: "#111111",
           smoke: "#1A1A1A"
         },
-        rcb: {
+        brand: {
           gold: "#D4AF37",
           crimson: "#DC2626"
         }
@@ -25,7 +25,7 @@ const config = {
         body: ["var(--font-inter)", "sans-serif"]
       },
       boxShadow: {
-        "rcb-glow": "0 0 30px rgba(212, 175, 55, 0.32), 0 0 54px rgba(220, 38, 38, 0.22)"
+        "premium-glow": "0 18px 70px rgba(0, 0, 0, 0.38), 0 0 26px rgba(212, 175, 55, 0.16), 0 0 28px rgba(220, 38, 38, 0.1)"
       }
     }
   },
