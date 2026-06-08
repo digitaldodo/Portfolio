@@ -3,45 +3,30 @@
 import {
   ArrowUpRight,
   Award,
-  BadgeCheck,
+  CheckCircle2,
   Code2,
   Database,
-  Download,
-  Eye,
   ExternalLink,
-  Gauge,
-  Layers3,
   Mail,
   Phone,
-  Route,
-  ScanLine,
-  Server,
   ShieldCheck,
-  Star,
   Smartphone,
-  Target,
-  TrendingUp,
-  Zap
+  Users,
+  Workflow
 } from "lucide-react";
-import { animate, motion, useInView, useMotionValue, useReducedMotion, useScroll, useTransform } from "framer-motion";
-import dynamic from "next/dynamic";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
-import { useEffect, useRef } from "react";
-import { PerformanceStrip } from "./components/PerformanceStrip";
+import { useRef } from "react";
 import { Navigation } from "./components/Navigation";
+import { ScrollProgressRail } from "./components/ScrollProgressRail";
 import { SkillsSection } from "./components/SkillsSection";
-
-const ScrollProgressRail = dynamic(
-  () => import("./components/ScrollProgressRail").then((module) => module.ScrollProgressRail),
-  { ssr: false }
-);
 
 const accessFlowProject = {
   name: "AccessFlow",
   liveLink: "https://accessflow-web.onrender.com",
   stack: ["React", "React Native", "Spring Boot", "MongoDB", "Firebase"],
   description:
-    "An enterprise-grade visitor and workforce management platform featuring real-time operational visibility and role-based access control. Streamlined visitor approvals and security workflows through QR-based access via dedicated web and mobile applications."
+    "A visitor and workforce operations platform with role-based approvals, QR access, and dedicated web and mobile surfaces for on-site teams."
 };
 
 const credentials = [
@@ -50,152 +35,96 @@ const credentials = [
     year: "2026",
     issuer: "IIT Roorkee / NPTEL",
     result: "Top 1% Topper, Score: 90",
-    rarity: "Top 1% Discipline",
     highlight: true
   },
   {
     title: "Management Information System",
     year: "2025",
     issuer: "NPTEL",
-    result: "Elite + Gold, Score: 92",
-    rarity: "Elite Gold"
+    result: "Elite + Gold, Score: 92"
   },
   {
     title: "Intro. to Environmental Engineering",
     year: "2025",
     issuer: "NPTEL",
-    result: "Elite + Silver, Score: 84",
-    rarity: "Elite Silver"
+    result: "Elite + Silver, Score: 84"
   },
   {
     title: "Software Engineering",
     year: "2024",
     issuer: "NPTEL",
-    result: "Elite, Score: 73",
-    rarity: "Elite"
+    result: "Elite, Score: 73"
   },
   {
     title: "Problem Solving",
     year: "Ongoing",
     issuer: "GeeksforGeeks and LeetCode",
-    result: "Solved 200+ coding challenges combined",
-    rarity: "Consistency Streak"
+    result: "Solved 200+ coding challenges combined"
   }
 ];
 
-const careerStats = [
+const principles = [
   {
-    metricLabel: "Architecture Output",
-    label: "Systems Built",
-    value: 3,
-    decimals: 0,
-    suffix: "+",
-    detail: "Full-stack, mobile, and backend systems",
-    icon: Layers3
+    title: "Product Clarity",
+    copy: "Simple flows, legible states, and interfaces that help people make decisions without fighting the system."
   },
   {
-    metricLabel: "Problem Discipline",
-    label: "Problems Solved",
-    value: 200,
-    decimals: 0,
-    suffix: "+",
-    detail: "Algorithmic practice across GFG and LeetCode",
-    icon: Code2
+    title: "Reliable Architecture",
+    copy: "Backend choices matter as much as the surface: permissions, data movement, and deployment paths need to be considered."
   },
   {
-    metricLabel: "Learning Standard",
-    label: "Certifications Earned",
-    value: 4,
-    decimals: 0,
-    suffix: "+",
-    detail: "NPTEL credentials with Elite, Gold, and Top 1% outcomes",
-    icon: BadgeCheck
-  },
-  {
-    metricLabel: "Release Readiness",
-    label: "Production Deployments",
-    value: 2,
-    decimals: 0,
-    suffix: "+",
-    detail: "Live web services and shipped product surfaces",
-    icon: Server
-  },
-  {
-    metricLabel: "Team Standard",
-    label: "Leadership Experience",
-    value: 3,
-    decimals: 0,
-    suffix: "+",
-    detail: "Communication, project ownership, and delivery coordination",
-    icon: TrendingUp
+    title: "Steady Execution",
+    copy: "Progress comes from consistent refinement, honest review, and the discipline to keep a product sharper after every build."
   }
 ];
 
-const mindsetPrinciples = [
+const projectNotes = [
   {
-    title: "Discipline",
-    signal: "Daily reps over occasional intensity",
-    detail: "Build habits that keep progress moving even when the work is repetitive.",
-    icon: Gauge
+    title: "Role clarity",
+    copy: "Designed boundaries for admins, guards, and operational users so access decisions remain accountable."
   },
   {
-    title: "Consistency",
-    signal: "Small improvements, compounded",
-    detail: "Keep solving, shipping, and refining until the system gets sharper.",
-    icon: Target
+    title: "Multi-surface flow",
+    copy: "Built web and mobile touchpoints for visitor approval, identity checks, and on-site access workflows."
   },
   {
-    title: "Resilience",
-    signal: "Calm under pressure",
-    detail: "Treat blockers as feedback, recover quickly, and stay locked on execution.",
-    icon: ShieldCheck
-  },
-  {
-    title: "Execution",
-    signal: "Intentional delivery",
-    detail: "Translate ideas into reliable products with clean UX and dependable backend flows.",
-    icon: Zap
+    title: "Production backbone",
+    copy: "Published Spring Boot services backed by MongoDB with deployment choices suited to practical usage."
   }
 ];
 
-const executionLog = [
+const projectFrames = [
   {
-    title: "Built AccessFlow mobile app",
-    description:
-      "Created a field-ready React Native interface for visitor and workforce access workflows.",
-    icon: Smartphone
+    label: "01",
+    title: "Request",
+    copy: "Visitor intent enters a structured approval path."
   },
   {
-    title: "Implemented role-based workflows",
-    description:
-      "Designed approval paths and access boundaries for admins, guards, and operational users.",
-    icon: Route
+    label: "02",
+    title: "Approve",
+    copy: "Operations teams review access with clear ownership."
   },
   {
-    title: "Deployed production backend",
-    description:
-      "Published Spring Boot services with MongoDB-backed data flows for real operational use.",
-    icon: Server
-  },
-  {
-    title: "Improved dashboard UX",
-    description:
-      "Refined high-value views so teams can understand visitor status and security activity faster.",
-    icon: Database
-  },
-  {
-    title: "Solved 200+ DSA problems",
-    description:
-      "Maintained steady problem-solving practice across GeeksforGeeks and LeetCode.",
-    icon: Code2
+    label: "03",
+    title: "Verify",
+    copy: "Guards complete the loop through QR-backed checks."
   }
+];
+
+const projectMetrics = [
+  { value: "3", label: "Role surfaces" },
+  { value: "Web + Mobile", label: "Product clients" },
+  { value: "QR", label: "Verification layer" }
 ];
 
 const resumePath = "/assets/Ansh_Gupta_Resume.pdf";
 const logoPath = "/assets/ag-logo.svg";
 
-const buttonHover = {
-  scale: 1.02
+const fadeUp = {
+  initial: { opacity: 0, y: 28 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, amount: 0.25 },
+  transition: { duration: 0.7, ease: "easeOut" as const }
 };
 
 function SectionHeading({
@@ -205,336 +134,14 @@ function SectionHeading({
 }: {
   label: string;
   title: string;
-  copy: string;
+  copy?: string;
 }) {
   return (
-    <div className="max-w-3xl">
-      <p className="font-heading mb-3 text-sm font-bold uppercase text-brand-gold">{label}</p>
-      <h2 className="font-heading text-3xl font-bold text-white sm:text-4xl">{title}</h2>
-      <p className="mt-4 max-w-2xl text-base leading-8 text-zinc-400">{copy}</p>
+    <div className="section-heading">
+      <p className="eyebrow">{label}</p>
+      <h2 className="font-heading text-4xl font-semibold leading-tight text-white sm:text-5xl">{title}</h2>
+      {copy ? <p className="mt-5 max-w-2xl text-base leading-8 text-zinc-400 sm:text-lg">{copy}</p> : null}
     </div>
-  );
-}
-
-function AnimatedNumber({
-  value,
-  decimals = 0,
-  suffix = ""
-}: {
-  value: number;
-  decimals?: number;
-  suffix?: string;
-}) {
-  const ref = useRef<HTMLSpanElement>(null);
-  const motionValue = useMotionValue(0);
-  const displayValue = useTransform(motionValue, (latest) => `${latest.toFixed(decimals)}${suffix}`);
-  const isInView = useInView(ref, { once: true, amount: 0.65 });
-
-  useEffect(() => {
-    if (!isInView) {
-      return;
-    }
-
-    const controls = animate(motionValue, value, {
-      duration: 1.4,
-      ease: "easeOut"
-    });
-
-    return controls.stop;
-  }, [isInView, motionValue, value]);
-
-  return <motion.span ref={ref}>{displayValue}</motion.span>;
-}
-
-function PerformanceIndex() {
-  return (
-    <div className="relative w-full max-w-[26.5rem] lg:justify-self-end">
-      <motion.div
-        whileHover={{ y: -3 }}
-        transition={{ type: "spring", stiffness: 190, damping: 18 }}
-        className="glass-panel hero-stats-panel rounded-lg p-2.5 sm:p-3"
-      >
-        <div className="relative overflow-hidden rounded-lg border border-white/[0.08] bg-surface-charcoal/90 p-3.5">
-          <div className="relative z-10 flex items-center justify-between border-b border-white/[0.08] pb-3">
-            <div>
-              <p className="font-heading text-sm font-bold text-brand-gold">Engineering Snapshot</p>
-              <p className="mt-1 text-xs text-zinc-500 sm:text-sm">Focused full-stack execution</p>
-            </div>
-            <Code2 className="text-brand-gold/85" aria-hidden="true" size={21} />
-          </div>
-
-          <div className="relative z-10 grid gap-2 py-3">
-            {careerStats.map(({ metricLabel, label, value, suffix, decimals, detail, icon: Icon }) => (
-              <div
-                key={label}
-                className="premium-card rounded-md border border-white/[0.08] bg-white/[0.035] px-3 py-2.5 backdrop-blur-md"
-              >
-                <div className="relative z-10 flex items-center gap-2.5">
-                  <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md border border-white/[0.08] bg-black/25 text-brand-gold/75">
-                    <Icon aria-hidden="true" size={15} />
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <p className="font-heading text-[10px] font-bold uppercase leading-3 text-brand-gold/70">{metricLabel}</p>
-                    <p className="mt-1 truncate text-xs font-semibold leading-4 text-zinc-300">{label}</p>
-                  </div>
-                  <p className="font-heading shrink-0 text-xl font-bold leading-none text-white">
-                      <AnimatedNumber value={value} decimals={decimals} suffix={suffix} />
-                  </p>
-                </div>
-                <p className="sr-only">{detail}</p>
-              </div>
-            ))}
-          </div>
-
-          <div className="relative z-10 rounded-md border border-white/[0.08] bg-white/[0.03] p-3">
-            <p className="font-heading text-base font-bold text-white">Current Focus</p>
-            <p className="mt-1.5 text-xs leading-5 text-zinc-400">
-              Designing clean product flows, secure backends, and frontend systems that feel fast, reliable, and deliberate from the first click.
-            </p>
-          </div>
-        </div>
-      </motion.div>
-    </div>
-  );
-}
-
-function MindsetSection() {
-  return (
-    <section id="mindset" className="section-shell relative z-10 scroll-mt-28 py-20">
-      <div className="grid gap-8 lg:grid-cols-[0.82fr_1.18fr] lg:items-stretch">
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.35 }}
-          transition={{ duration: 0.56, ease: "easeOut" }}
-          className="mindset-spotlight relative overflow-hidden rounded-lg border border-white/10 bg-white/[0.045] p-6 shadow-premium-glow backdrop-blur-xl sm:p-8"
-        >
-          <div className="relative z-10">
-            <p className="font-heading mb-3 text-sm font-bold uppercase text-brand-gold">Mindset</p>
-            <h2 className="font-heading text-3xl font-bold leading-tight text-white sm:text-4xl">
-              Built around discipline, resilience, and repeatable execution.
-            </h2>
-            <p className="mt-5 text-base leading-8 text-zinc-300">
-              The standard is simple: prepare with intent, perform with control, review honestly, and improve the next build.
-            </p>
-          </div>
-          <div className="relative z-10 mt-8 grid grid-cols-3 gap-3">
-            {["Prepare", "Execute", "Improve"].map((stage) => (
-              <div key={stage} className="rounded-md border border-white/10 bg-black/[0.24] p-3 text-center">
-                <p className="font-heading text-[11px] font-bold uppercase text-zinc-500">{stage}</p>
-              </div>
-            ))}
-          </div>
-        </motion.div>
-
-        <motion.div
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.2 }}
-          variants={{
-            hidden: {},
-            show: {
-              transition: { staggerChildren: 0.08 }
-            }
-          }}
-          className="grid gap-4 sm:grid-cols-2"
-        >
-          {mindsetPrinciples.map(({ title, signal, detail, icon: Icon }) => (
-            <motion.article
-              key={title}
-              variants={{
-                hidden: { opacity: 0, y: 18 },
-                show: { opacity: 1, y: 0, transition: { duration: 0.46, ease: "easeOut" } }
-              }}
-              className="premium-card rounded-lg border border-white/10 bg-white/[0.045] p-5 backdrop-blur-xl"
-            >
-              <div className="relative z-10 flex items-start justify-between gap-5">
-                <div>
-                  <p className="font-heading text-xs font-bold uppercase text-brand-gold/80">{signal}</p>
-                  <h3 className="font-heading mt-3 text-2xl font-bold text-white">{title}</h3>
-                </div>
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-white/10 bg-white/[0.04] text-brand-gold">
-                  <Icon aria-hidden="true" size={19} />
-                </div>
-              </div>
-              <p className="relative z-10 mt-4 leading-7 text-zinc-400">{detail}</p>
-            </motion.article>
-          ))}
-        </motion.div>
-      </div>
-    </section>
-  );
-}
-
-function AccessFlowCard() {
-  return (
-    <div className="mt-10">
-      <motion.article
-        whileHover={{ y: -3 }}
-        transition={{ type: "spring", stiffness: 180, damping: 18 }}
-        className="glass-panel group relative overflow-hidden rounded-lg p-6 sm:p-8"
-      >
-        <div className="relative grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-end">
-          <div>
-            <div className="mb-5 inline-flex items-center gap-2 rounded-md border border-white/10 bg-white/[0.04] px-3 py-2 text-sm font-semibold text-zinc-300">
-              <ShieldCheck aria-hidden="true" size={16} />
-              Full-stack platform
-            </div>
-            <h3 className="font-heading text-4xl font-bold text-white sm:text-5xl">{accessFlowProject.name}</h3>
-            <p className="mt-5 max-w-3xl text-base leading-8 text-zinc-300 sm:text-lg">
-              {accessFlowProject.description}
-            </p>
-          </div>
-
-          <div className="grid gap-4">
-            <div className="grid gap-3 sm:grid-cols-2">
-              <div className="rounded-md border border-white/10 bg-surface-charcoal/80 p-4 backdrop-blur-md">
-                <ScanLine className="text-brand-gold" aria-hidden="true" size={22} />
-                <p className="font-heading mt-4 text-lg font-bold text-white">QR Access</p>
-                <p className="mt-2 text-sm leading-6 text-zinc-400">Visitor entry flows and approval gates.</p>
-              </div>
-              <div className="rounded-md border border-white/10 bg-surface-charcoal/80 p-4 backdrop-blur-md">
-                <Smartphone className="text-brand-gold" aria-hidden="true" size={22} />
-                <p className="font-heading mt-4 text-lg font-bold text-white">Web + Mobile</p>
-                <p className="mt-2 text-sm leading-6 text-zinc-400">Dedicated interfaces for teams in motion.</p>
-              </div>
-            </div>
-            <motion.a
-              href={accessFlowProject.liveLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              whileTap={{ scale: 0.98 }}
-              className="focus-ring glow-button inline-flex items-center justify-center gap-2 rounded-md bg-brand-gold px-5 py-3 text-sm font-bold text-surface-black transition hover:bg-white"
-            >
-              Open Live Build
-              <ExternalLink aria-hidden="true" size={18} />
-            </motion.a>
-          </div>
-        </div>
-
-        <div className="relative mt-8 flex flex-wrap gap-2">
-          {accessFlowProject.stack.map((tech, index) => (
-            <motion.span
-              key={tech}
-              transition={{ duration: 0.2, delay: index * 0.03 }}
-              className="rounded-md border border-white/10 bg-white/[0.04] px-3 py-1.5 text-sm font-semibold text-zinc-300 backdrop-blur-md transition-colors group-hover:border-brand-gold/35 group-hover:text-white"
-            >
-              {tech}
-            </motion.span>
-          ))}
-        </div>
-      </motion.article>
-    </div>
-  );
-}
-
-function ExecutionLogSection() {
-  return (
-    <section id="execution-log" className="section-shell relative z-10 scroll-mt-28 py-20">
-      <SectionHeading
-        label="Execution Log"
-        title="Recent delivery milestones."
-        copy="A focused timeline of product, backend, mobile, and problem-solving progress built around consistency and clean execution."
-      />
-
-      <motion.div
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true, amount: 0.2 }}
-        variants={{
-          hidden: {},
-          show: {
-            transition: {
-              staggerChildren: 0.08
-            }
-          }
-        }}
-        className="relative mt-12 grid gap-4"
-      >
-        <div className="absolute left-5 top-5 hidden h-[calc(100%-2.5rem)] w-px bg-gradient-to-b from-brand-gold/70 via-white/15 to-transparent sm:block" />
-        {executionLog.map(({ title, description, icon: Icon }, index) => (
-          <motion.article
-            key={title}
-            variants={{
-              hidden: { opacity: 0, y: 20 },
-              show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
-            }}
-            className="grid gap-4 sm:grid-cols-[42px_1fr] sm:items-start"
-          >
-            <div className="relative z-10 hidden h-10 w-10 items-center justify-center rounded-md border border-white/10 bg-surface-black text-brand-gold sm:flex">
-              <Icon aria-hidden="true" size={18} />
-            </div>
-            <div className="premium-card rounded-lg border border-white/10 bg-white/[0.045] p-5 backdrop-blur-xl sm:p-6">
-              <div className="relative z-10 flex items-start justify-between gap-5">
-                <div>
-                  <p className="font-heading text-xs font-bold uppercase text-brand-gold/80">Phase {index + 1}</p>
-                  <h3 className="font-heading mt-2 text-xl font-bold text-white">{title}</h3>
-                </div>
-                <Icon aria-hidden="true" size={20} className="shrink-0 text-brand-gold sm:hidden" />
-              </div>
-              <p className="relative z-10 mt-3 max-w-3xl leading-7 text-zinc-300">{description}</p>
-            </div>
-          </motion.article>
-        ))}
-      </motion.div>
-    </section>
-  );
-}
-
-function CredentialTimelineItem({
-  item,
-  index
-}: {
-  item: (typeof credentials)[number];
-  index: number;
-}) {
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start 70%", "center center"]
-  });
-  const opacity = useTransform(scrollYProgress, [0, 1], [0.3, 1]);
-  const y = useTransform(scrollYProgress, [0, 1], [24, 0]);
-
-  return (
-    <motion.div ref={ref} style={{ opacity, y }} className="relative grid gap-4 pl-10 sm:grid-cols-[120px_1fr] sm:gap-6 sm:pl-14">
-      <div className="absolute left-[7px] top-2 h-4 w-4 rounded-full border border-brand-gold/70 bg-surface-black sm:left-[15px]" />
-      <div className="font-heading text-sm font-bold text-brand-gold sm:pt-1">{item.year}</div>
-      <div
-        className={`premium-card rounded-lg border p-5 backdrop-blur-xl ${
-          item.highlight
-            ? "border-brand-gold/35 bg-[linear-gradient(135deg,rgba(212,175,55,0.09),rgba(255,255,255,0.035))] shadow-[0_24px_64px_rgba(0,0,0,0.3)]"
-            : "border-white/10 bg-white/[0.045]"
-        }`}
-      >
-        <div className="relative z-10 flex items-start justify-between gap-4">
-          <div>
-            <div className="mb-3 flex flex-wrap items-center gap-2">
-              <span
-                className={`font-heading inline-flex items-center gap-1.5 rounded-md border px-2.5 py-1 text-[11px] font-bold uppercase ${
-                  item.highlight
-                    ? "border-brand-gold/50 bg-brand-gold text-surface-black"
-                    : "border-white/10 bg-white/5 text-brand-gold"
-                }`}
-              >
-                {item.highlight ? <Star aria-hidden="true" size={12} /> : <Award aria-hidden="true" size={12} />}
-                {item.rarity}
-              </span>
-            </div>
-            <p className="font-heading text-xl font-bold text-white">{item.title}</p>
-            <p className="mt-2 text-sm font-semibold uppercase text-zinc-500">{item.issuer}</p>
-          </div>
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-brand-gold text-surface-black">
-            {index === credentials.length - 1 ? (
-              <Code2 aria-hidden="true" size={20} />
-            ) : (
-              <Award aria-hidden="true" size={20} />
-            )}
-          </div>
-        </div>
-        <p className="relative z-10 mt-4 leading-7 text-zinc-300">{item.result}</p>
-      </div>
-    </motion.div>
   );
 }
 
@@ -546,297 +153,417 @@ function GitHubIcon() {
   );
 }
 
-function ExecutiveContactCard() {
+function Hero() {
+  const prefersReducedMotion = useReducedMotion();
+  const { scrollYProgress } = useScroll();
+  const copyY = useTransform(scrollYProgress, [0, 0.22], [0, -22]);
+  const featureY = useTransform(scrollYProgress, [0, 0.22], [0, 24]);
+
   return (
-    <motion.article
-      whileHover={{ y: -3 }}
-      transition={{ type: "spring", stiffness: 190, damping: 18 }}
-      className="glass-panel relative mx-auto mt-12 max-w-4xl overflow-hidden rounded-lg p-6 sm:p-8"
-    >
-      <div className="relative z-10 grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end">
-        <div>
-          <div className="mb-5 inline-flex items-center gap-2 rounded-md border border-white/10 bg-white/[0.04] px-3 py-2 text-sm font-semibold text-zinc-300">
-            <span className="h-1.5 w-1.5 rounded-full bg-brand-gold" />
-            Available for focused engineering teams
+    <section id="home" className="section-shell hero-section relative z-10">
+      <div className="hero-ambient" aria-hidden="true" />
+      <div className="hero-composition">
+        <motion.div style={{ y: prefersReducedMotion ? 0 : copyY }} className="hero-copy">
+          <div className="hero-identity">
+            <span className="hero-logo-shell inline-flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-white/[0.035] p-1">
+              <Image
+                src={logoPath}
+                alt="Ansh Gupta logo"
+                width={92}
+                height={92}
+                className="portfolio-logo h-12 w-12"
+                priority
+              />
+            </span>
+            <div>
+              <p className="font-heading text-lg font-semibold text-white">Ansh Gupta</p>
+              <p className="mt-1 text-sm text-zinc-500">Software Engineer / Product Systems</p>
+            </div>
           </div>
-          <h2 className="font-heading max-w-2xl text-3xl font-bold text-white sm:text-4xl">
-            Building reliable products with quiet attention to detail.
-          </h2>
-          <p className="mt-4 max-w-2xl leading-7 text-zinc-400">
-            Open to software engineering roles, internships, and teams that care about clean UX, solid architecture, and steady delivery.
-          </p>
-        </div>
-        <motion.a
-          href="mailto:anshguptakmrn@gmail.com"
-          whileHover={buttonHover}
-          whileTap={{ scale: 0.98 }}
-          className="focus-ring glow-button inline-flex shrink-0 items-center justify-center gap-2 rounded-md bg-brand-gold px-5 py-3 text-sm font-bold text-surface-black transition-colors hover:bg-white"
+
+          <p className="eyebrow hero-kicker">Software Engineering Portfolio</p>
+          <h1 className="font-heading hero-headline text-white">
+            Product engineering, built with restraint.
+          </h1>
+
+          <div className="hero-support">
+            <p className="hero-intro text-zinc-300">
+              Computer Science undergraduate building secure full-stack products with composed interfaces,
+              dependable backend flows, and clear execution habits.
+            </p>
+
+            <div className="hero-actions">
+              <a href="#projects" className="focus-ring primary-link">
+                View selected work
+                <ArrowUpRight aria-hidden="true" size={18} />
+              </a>
+              <a href={resumePath} target="_blank" rel="noopener noreferrer" className="focus-ring quiet-link">
+                Resume
+              </a>
+            </div>
+          </div>
+        </motion.div>
+
+        <motion.aside
+          style={{ y: prefersReducedMotion ? 0 : featureY }}
+          className="hero-feature"
+          aria-label="Featured project preview"
         >
-          Start a Conversation
-          <Mail aria-hidden="true" size={18} />
-        </motion.a>
+          <div className="hero-feature-visual" aria-hidden="true">
+            <div className="hero-feature-grid" />
+            <div className="hero-feature-ring" />
+            <div className="hero-flow-line hero-flow-line-one" />
+            <div className="hero-flow-line hero-flow-line-two" />
+            <span className="hero-flow-node hero-flow-node-one">Admin</span>
+            <span className="hero-flow-node hero-flow-node-two">Guard</span>
+            <span className="hero-flow-node hero-flow-node-three">Guest</span>
+            <p className="hero-feature-word">AccessFlow</p>
+          </div>
+          <div className="hero-feature-copy">
+            <p className="eyebrow">Selected Case Study</p>
+            <h2 className="font-heading">AccessFlow</h2>
+            <p>
+              Visitor and workforce operations across approvals, QR checks, web dashboards, and field use.
+            </p>
+            <a href="#projects" className="focus-ring hero-feature-link">
+              View project
+              <ArrowUpRight aria-hidden="true" size={16} />
+            </a>
+          </div>
+        </motion.aside>
       </div>
-    </motion.article>
+    </section>
   );
 }
 
-function Footer() {
+function AboutSection() {
   return (
-    <footer className="relative z-10 border-t border-white/10 bg-black/30 py-10">
-      <div className="section-shell flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
-        <p className="font-heading max-w-md text-lg font-bold text-white">
-          Built with discipline, focus, and product ambition. © Ansh Gupta.
+    <motion.section id="about" className="section-shell editorial-section relative z-10 scroll-mt-28" {...fadeUp}>
+      <div className="grid gap-10 lg:grid-cols-[0.38fr_0.62fr] lg:items-start">
+        <SectionHeading label="Profile" title="A builder with product taste and engineering patience." />
+        <div className="space-y-7 text-lg leading-9 text-zinc-300">
+          <p>
+            I am a Computer Science undergraduate at GLA University, currently working across frontend,
+            mobile, and backend systems. My work is shaped by a simple standard: make the experience
+            understandable, keep the architecture dependable, and leave every flow cleaner than it started.
+          </p>
+          <p className="text-zinc-500">
+            I care about the quiet parts of software too: access boundaries, approval paths,
+            database operations, deployment reliability, and the details that make a product feel composed.
+          </p>
+        </div>
+      </div>
+    </motion.section>
+  );
+}
+
+function PrinciplesSection() {
+  return (
+    <section id="mindset" className="section-shell dense-section relative z-10 scroll-mt-28">
+      <SectionHeading
+        label="Operating Style"
+        title="Built for high-trust product work."
+        copy="The focus is on useful systems, measured decisions, and consistent follow-through."
+      />
+
+      <motion.div
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, amount: 0.25 }}
+        variants={{ hidden: {}, show: { transition: { staggerChildren: 0.1 } } }}
+        className="mt-14 grid gap-8 lg:grid-cols-3"
+      >
+        {principles.map((principle) => (
+          <motion.article
+            key={principle.title}
+            variants={{
+              hidden: { opacity: 0, y: 20 },
+              show: { opacity: 1, y: 0, transition: { duration: 0.55, ease: "easeOut" } }
+            }}
+            className="editorial-rule pt-7"
+          >
+            <h3 className="font-heading text-2xl font-semibold text-white">{principle.title}</h3>
+            <p className="mt-5 leading-8 text-zinc-400">{principle.copy}</p>
+          </motion.article>
+        ))}
+      </motion.div>
+    </section>
+  );
+}
+
+function NarrativeBreak() {
+  return (
+    <motion.section className="section-shell breathing-section relative z-10" {...fadeUp}>
+      <div className="narrative-break">
+        <p className="eyebrow">Throughline</p>
+        <p className="font-heading narrative-statement">
+          Product clarity first. System reliability underneath. Execution visible in the details.
         </p>
-        <div className="flex flex-wrap gap-3">
+      </div>
+    </motion.section>
+  );
+}
+
+function ProjectSection() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const prefersReducedMotion = useReducedMotion();
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"]
+  });
+  const mockupY = useTransform(scrollYProgress, [0, 1], [36, -34]);
+  const detailY = useTransform(scrollYProgress, [0, 1], [-14, 18]);
+
+  return (
+    <section ref={sectionRef} id="projects" className="project-cinema relative z-10 scroll-mt-0">
+      <div className="section-shell">
+        <div className="project-cinema-heading">
+          <SectionHeading
+            label="Selected Work"
+            title="AccessFlow"
+            copy="A full-stack product system for visitor and workforce operations, presented through the decisions that make it usable."
+          />
           <a
-            href="mailto:anshguptakmrn@gmail.com"
-            className="focus-ring glow-button inline-flex items-center gap-2 rounded-md border border-white/10 bg-white/5 px-3 py-2 text-sm font-semibold text-zinc-300 transition hover:border-brand-gold/45 hover:text-white"
+            href={accessFlowProject.liveLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="focus-ring quiet-link project-live-link"
           >
-            <Mail aria-hidden="true" size={16} />
-            Email
+            Open live build
+            <ExternalLink aria-hidden="true" size={18} />
           </a>
-          <a
-            href="tel:+918643074602"
-            className="focus-ring glow-button inline-flex items-center gap-2 rounded-md border border-white/10 bg-white/5 px-3 py-2 text-sm font-semibold text-zinc-300 transition hover:border-brand-gold/45 hover:text-white"
-          >
-            <Phone aria-hidden="true" size={16} />
+        </div>
+
+        <motion.article {...fadeUp} className="project-showcase">
+          <motion.div style={{ y: prefersReducedMotion ? 0 : mockupY }} className="project-visual-stage">
+            <div className="project-browser" aria-label="AccessFlow operations dashboard mockup">
+              <div className="project-browser-bar">
+                <span />
+                <span />
+                <span />
+                <p>accessflow.app / operations</p>
+              </div>
+              <div className="project-browser-grid">
+                <div className="project-side-rail">
+                  <ShieldCheck aria-hidden="true" size={18} />
+                  <Users aria-hidden="true" size={16} />
+                  <Code2 aria-hidden="true" size={16} />
+                  <Database aria-hidden="true" size={16} />
+                </div>
+                <div className="project-dashboard">
+                  <div className="project-dashboard-header">
+                    <div>
+                      <p className="project-screen-label">Visitor intake</p>
+                      <h3 className="font-heading">Access request queue</h3>
+                    </div>
+                    <span>Live ops</span>
+                  </div>
+                  <div className="project-approval-card">
+                    <div>
+                      <p>Guest verification</p>
+                      <strong>Pending approval</strong>
+                    </div>
+                    <CheckCircle2 aria-hidden="true" size={22} />
+                  </div>
+                  <div className="project-table" aria-hidden="true">
+                    {["Vendor meeting", "Interview panel", "Maintenance"].map((item, index) => (
+                      <div key={item}>
+                        <span>{item}</span>
+                        <strong>{index === 0 ? "Approve" : index === 1 ? "Review" : "Scheduled"}</strong>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="project-flow-map">
+                    {projectFrames.map((frame) => (
+                      <div key={frame.title} className="project-flow-step">
+                        <span>{frame.label}</span>
+                        <p>{frame.title}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="project-phone" aria-hidden="true">
+              <div className="project-phone-notch" />
+              <div className="project-phone-content">
+                <Smartphone size={18} />
+                <p>Guard check-in</p>
+                <div className="qr-mark">
+                  {Array.from({ length: 9 }).map((_, index) => (
+                    <span key={index} />
+                  ))}
+                </div>
+                <span className="project-phone-status">Verified</span>
+              </div>
+            </div>
+          </motion.div>
+
+          <motion.div style={{ y: prefersReducedMotion ? 0 : detailY }} className="project-story-panel">
+            <div className="project-kicker">
+              <Workflow aria-hidden="true" size={17} />
+              Access operations system
+            </div>
+            <p className="project-lede">{accessFlowProject.description}</p>
+
+            <div className="project-impact-strip">
+              {projectMetrics.map((metric) => (
+                <div key={metric.label}>
+                  <strong>{metric.value}</strong>
+                  <span>{metric.label}</span>
+                </div>
+              ))}
+            </div>
+
+            <div className="project-notes">
+              {projectNotes.map((note) => (
+                <article key={note.title}>
+                  <h3 className="font-heading">{note.title}</h3>
+                  <p>{note.copy}</p>
+                </article>
+              ))}
+            </div>
+
+            <div className="project-stack-line">
+              {accessFlowProject.stack.map((tech) => (
+                <span key={tech}>{tech}</span>
+              ))}
+            </div>
+          </motion.div>
+        </motion.article>
+
+        <div className="project-frame-strip">
+          {projectFrames.map((frame) => (
+            <motion.article key={frame.title} {...fadeUp}>
+              <span>{frame.label}</span>
+              <h3 className="font-heading">{frame.title}</h3>
+              <p>{frame.copy}</p>
+            </motion.article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function CredentialsSection() {
+  const featuredCredential = credentials[0];
+  const supportingCredentials = credentials.slice(1);
+
+  return (
+    <section id="credentials" className="credentials-editorial relative z-10 scroll-mt-28">
+      <div className="section-shell">
+        <div className="credentials-intro">
+          <SectionHeading
+            label="Credentials"
+            title="A learning record with a visible arc."
+            copy="A compact record across leadership, systems thinking, engineering fundamentals, and problem-solving practice."
+          />
+        </div>
+
+        <div className="credentials-layout">
+          <motion.article {...fadeUp} className="credential-spotlight">
+            <div className="credential-spotlight-mark">
+              <Award aria-hidden="true" size={28} />
+            </div>
+            <p className="eyebrow">{featuredCredential.year} / Leadership</p>
+            <h3 className="font-heading">{featuredCredential.title}</h3>
+            <p>
+              A top-percentile leadership result that reflects the side of engineering I care about:
+              thoughtful teams, clear coordination, and execution that holds under pressure.
+            </p>
+            <div className="credential-result-line">
+              <span>{featuredCredential.issuer}</span>
+              <strong>{featuredCredential.result}</strong>
+            </div>
+          </motion.article>
+
+          <div className="credential-timeline" aria-label="Credential timeline">
+            {supportingCredentials.map((item, index) => (
+              <motion.article
+                key={`${item.title}-${item.year}`}
+                {...fadeUp}
+                className="credential-milestone"
+                style={{ transitionDelay: `${index * 70}ms` }}
+              >
+                <div className="credential-time">
+                  <span>{item.year}</span>
+                </div>
+                <div>
+                  <p className="credential-issuer">{item.issuer}</p>
+                  <h3 className="font-heading">{item.title}</h3>
+                  <p>{item.result}</p>
+                </div>
+              </motion.article>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ContactSection() {
+  return (
+    <section id="contact" className="section-shell final-section relative z-10 scroll-mt-28">
+      <motion.div {...fadeUp} className="max-w-4xl">
+        <p className="eyebrow">Contact</p>
+        <h2 className="font-heading mt-6 text-5xl font-semibold leading-tight text-white sm:text-6xl">
+          Interested in useful products, careful systems, and teams with momentum.
+        </h2>
+        <p className="mt-7 max-w-2xl text-lg leading-8 text-zinc-400">
+          Open to software engineering roles, internships, and collaborations around clear UX,
+          dependable architecture, and practical product delivery.
+        </p>
+        <div className="mt-10 flex flex-col gap-4 text-zinc-300 sm:flex-row sm:flex-wrap sm:items-center">
+          <a href="mailto:anshguptakmrn@gmail.com" className="focus-ring primary-link">
+            <Mail aria-hidden="true" size={18} />
+            anshguptakmrn@gmail.com
+          </a>
+          <a href="tel:+918643074602" className="focus-ring quiet-link">
+            <Phone aria-hidden="true" size={17} />
             +91 8643074602
           </a>
           <a
             href="https://github.com/digitaldodo"
             target="_blank"
             rel="noopener noreferrer"
-            className="focus-ring glow-button inline-flex items-center gap-2 rounded-md border border-white/10 bg-white/5 px-3 py-2 text-sm font-semibold text-zinc-300 transition hover:border-brand-gold/45 hover:text-white"
+            className="focus-ring quiet-link"
           >
             <GitHubIcon />
             GitHub
           </a>
         </div>
+      </motion.div>
+    </section>
+  );
+}
+
+function Footer() {
+  return (
+    <footer className="relative z-10 py-10">
+      <div className="section-shell flex flex-col gap-3 border-t border-white/10 pt-8 text-sm text-zinc-600 sm:flex-row sm:items-center sm:justify-between">
+        <p>© Ansh Gupta</p>
+        <p>Software engineering, product craft, and steady execution.</p>
       </div>
     </footer>
   );
 }
 
 export default function Home() {
-  const prefersReducedMotion = useReducedMotion();
-  const { scrollYProgress } = useScroll();
-  const ambientY = useTransform(scrollYProgress, [0, 1], [0, -90]);
-  const glowY = useTransform(scrollYProgress, [0, 1], [0, -44]);
-  const heroVisualY = useTransform(scrollYProgress, [0, 0.22], [0, 24]);
-  const heroCopyY = useTransform(scrollYProgress, [0, 0.22], [0, -14]);
-
   return (
     <main className="relative min-h-screen overflow-hidden bg-transparent text-white">
       <Navigation />
       <ScrollProgressRail />
-
-      <motion.div
-        style={{ y: prefersReducedMotion ? 0 : ambientY }}
-        className="ambient-grid pointer-events-none fixed inset-0 z-0"
-      />
-      <motion.div
-        style={{ y: prefersReducedMotion ? 0 : glowY }}
-        className="pointer-events-none fixed inset-x-0 top-0 z-0 h-28 border-b border-white/5 bg-gradient-to-b from-white/[0.035] via-brand-gold/[0.025] to-transparent"
-      />
-
-      <section
-        id="home"
-        className="section-shell hero-section relative z-10 pb-16 pt-28 sm:pt-32"
-      >
-        <div className="hero-ambient" aria-hidden="true" />
-
-        <div className="hero-stage relative z-10 grid min-w-0 gap-10 lg:grid-cols-[minmax(0,1.5fr)_minmax(22rem,0.95fr)] lg:items-center lg:gap-12">
-          <motion.div className="min-w-0" style={{ y: prefersReducedMotion ? 0 : heroCopyY }}>
-            <div className="hero-copy">
-              <motion.div className="mb-7 flex max-w-3xl items-center gap-4 sm:gap-5">
-                <div className="hero-logo-shell inline-flex h-14 w-14 shrink-0 items-center justify-center rounded-xl border border-white/[0.08] bg-white/[0.035] p-1 sm:h-[4.25rem] sm:w-[4.25rem]">
-                  <Image
-                    src={logoPath}
-                    alt="Ansh Gupta logo"
-                    width={92}
-                    height={92}
-                    className="portfolio-logo h-12 w-12 sm:h-[3.7rem] sm:w-[3.7rem]"
-                    priority
-                  />
-                </div>
-                <div className="min-w-0">
-                  <motion.h1 className="font-heading text-[2.35rem] font-bold leading-none text-white sm:text-[3.35rem] lg:text-[4.4rem]">
-                    Ansh Gupta
-                  </motion.h1>
-                  <motion.p className="mt-2 max-w-md text-sm font-medium leading-6 text-zinc-300 sm:text-base">
-                    Product-minded Software Engineer
-                  </motion.p>
-                </div>
-              </motion.div>
-              <motion.h2 className="font-heading hero-headline max-w-3xl text-[2.35rem] font-bold leading-[1] text-zinc-100 sm:text-[3.05rem] lg:text-[3.45rem] xl:text-[3.8rem]">
-                <span className="block">Computer Science</span>
-                <span className="block">undergraduate</span>
-                <span className="block text-zinc-400">software developer.</span>
-              </motion.h2>
-              <motion.p className="mt-6 max-w-2xl text-base leading-8 text-zinc-300 sm:text-lg">
-                Building scalable enterprise systems with product clarity, careful interfaces, and dependable backend architecture.
-              </motion.p>
-              <motion.div className="hero-actions mt-8 flex flex-col gap-2.5 sm:flex-row sm:flex-wrap sm:items-center">
-                <motion.a
-                  whileHover={buttonHover}
-                  whileTap={{ scale: 0.98 }}
-                  href="#projects"
-                  className="focus-ring glow-button inline-flex h-12 items-center justify-center gap-2 rounded-md bg-brand-gold px-5 py-3 text-sm font-bold text-surface-black transition-colors hover:bg-white sm:px-6"
-                >
-                  View Project Work
-                  <ArrowUpRight aria-hidden="true" size={18} />
-                </motion.a>
-                <motion.a
-                  whileHover={buttonHover}
-                  whileTap={{ scale: 0.98 }}
-                  href="#connect"
-                  className="focus-ring glow-button inline-flex h-12 items-center justify-center gap-2 rounded-md border border-white/[0.09] bg-white/[0.035] px-5 py-3 text-sm font-semibold text-zinc-200 backdrop-blur-md transition-colors hover:border-brand-gold/40 hover:text-white"
-                >
-                  Contact Me
-                  <Mail aria-hidden="true" size={18} />
-                </motion.a>
-                <div className="group relative w-full sm:w-auto">
-                  <motion.a
-                    whileHover={buttonHover}
-                    whileTap={{ scale: 0.98 }}
-                    href={resumePath}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="focus-ring glow-button inline-flex h-12 w-full items-center justify-center gap-2 rounded-md border border-white/[0.09] bg-white/[0.03] px-5 py-3 text-sm font-semibold text-zinc-300 backdrop-blur-md transition-colors hover:border-brand-gold/40 hover:text-white sm:w-auto"
-                  >
-                    View Resume
-                    <Eye aria-hidden="true" size={18} />
-                  </motion.a>
-                  <div className="pointer-events-none absolute left-0 top-[calc(100%+0.75rem)] z-20 hidden w-64 rounded-lg border border-white/10 bg-surface-charcoal/95 p-4 text-left opacity-0 shadow-[0_20px_60px_rgba(0,0,0,0.36)] backdrop-blur-xl transition duration-200 group-hover:translate-y-0 group-hover:opacity-100 md:block md:translate-y-1">
-                    <p className="font-heading text-sm font-bold text-white">Ansh Gupta Resume</p>
-                    <p className="mt-1 text-xs leading-5 text-zinc-400">PDF resume with education, project work, technical skills, certifications, and contact details.</p>
-                  </div>
-                </div>
-                <motion.a
-                  whileHover={buttonHover}
-                  whileTap={{ scale: 0.98 }}
-                  href={resumePath}
-                  download="Ansh_Gupta_Resume.pdf"
-                  className="focus-ring glow-button inline-flex h-12 items-center justify-center gap-2 rounded-md border border-brand-gold/35 bg-brand-gold/[0.08] px-5 py-3 text-sm font-semibold text-brand-gold transition-colors hover:border-brand-gold/60 hover:bg-brand-gold/15 hover:text-white"
-                >
-                  Download Resume
-                  <Download aria-hidden="true" size={18} />
-                </motion.a>
-                <motion.a
-                  whileHover={buttonHover}
-                  whileTap={{ scale: 0.98 }}
-                  href="https://github.com/digitaldodo"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Open GitHub profile"
-                  className="focus-ring glow-button inline-flex h-12 w-full items-center justify-center rounded-md border border-white/[0.09] bg-white/[0.03] text-zinc-300 backdrop-blur-md transition-colors hover:border-brand-gold/40 hover:text-white sm:w-12"
-                >
-                  <GitHubIcon />
-                </motion.a>
-              </motion.div>
-            </div>
-          </motion.div>
-
-          <motion.div className="relative min-w-0 lg:pt-4" style={{ y: prefersReducedMotion ? 0 : heroVisualY }}>
-            <PerformanceIndex />
-          </motion.div>
-        </div>
-
-        <motion.div className="relative z-10 mt-8 min-w-0 sm:mt-10 lg:mt-6">
-          <PerformanceStrip />
-        </motion.div>
-      </section>
-
-      <motion.section
-        id="about"
-        initial={{ y: 30, opacity: 0 }}
-        whileInView={{ y: 0, opacity: 1 }}
-        viewport={{ once: true, amount: 0.35 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-        className="section-shell relative z-10 scroll-mt-28 py-20"
-      >
-        <div className="grid gap-8 lg:grid-cols-[0.75fr_1.25fr] lg:items-start">
-          <div>
-            <p className="font-heading mb-3 text-sm font-bold uppercase text-brand-gold">About Me</p>
-            <h2 className="font-heading text-3xl font-bold text-white sm:text-4xl">Disciplined Builder, Modern Execution</h2>
-          </div>
-          <div className="glass-panel rounded-lg p-6 sm:p-8">
-            <p className="text-base leading-8 text-zinc-300 sm:text-lg">
-              Driven and detail-oriented Computer Science undergraduate at GLA University (B.Tech CSE, CGPA:
-              8.43, Exp. 2027). Highly adaptable and a continuous learner, demonstrated by multiple advanced
-              certifications. Adept at designing secure, role-based workflows and optimizing database operations
-              to streamline business processes. Passionate about solving complex problems and eager to contribute
-              technical and collaborative skills to innovative tech teams.
-            </p>
-          </div>
-        </div>
-      </motion.section>
-
-      <MindsetSection />
-
+      <Hero />
+      <AboutSection />
+      <NarrativeBreak />
+      <PrinciplesSection />
       <SkillsSection />
-
-      <section id="projects" className="section-shell relative z-10 scroll-mt-28 py-20">
-        <SectionHeading
-          label="Flagship Build"
-          title="AccessFlow as a high-trust product system."
-          copy="A focused project highlight for enterprise operations, where access control, approvals, and field-ready interfaces have to move together."
-        />
-        <AccessFlowCard />
-      </section>
-
-      <ExecutionLogSection />
-
-      <section id="credentials" className="section-shell relative z-10 scroll-mt-28 py-20">
-        <SectionHeading
-          label="Credentials"
-          title="Proof of consistency."
-          copy="A chronological view of learning outcomes, national recognition, and problem-solving discipline."
-        />
-        <div className="relative mt-12 grid gap-7">
-          <div className="absolute bottom-8 left-[14px] top-2 w-px bg-gradient-to-b from-brand-gold/70 via-white/20 to-transparent sm:left-[22px]" />
-          {credentials.map((item, index) => (
-            <CredentialTimelineItem key={`${item.title}-${item.year}`} item={item} index={index} />
-          ))}
-        </div>
-      </section>
-
-      <section id="contact" className="section-shell relative z-10 scroll-mt-28 py-20">
-        <div className="glass-panel rounded-lg p-6 sm:p-8">
-          <div className="grid gap-8 lg:grid-cols-[1fr_1.1fr] lg:items-end">
-            <SectionHeading
-              label="Contact"
-              title="Ready for the next challenge."
-              copy="For roles, collaborations, or a sharper version of this portfolio, the inbox is open."
-            />
-            <div className="grid gap-3 sm:grid-cols-2">
-              <a
-                href="mailto:anshguptakmrn@gmail.com"
-                className="focus-ring premium-card rounded-lg border border-white/10 bg-white/5 p-5 backdrop-blur-md transition hover:-translate-y-0.5 hover:border-brand-gold/45"
-              >
-                <Mail className="relative z-10 mb-4 text-brand-gold" aria-hidden="true" size={22} />
-                <p className="font-heading relative z-10 font-bold text-white">Email</p>
-                <p className="relative z-10 mt-2 break-all text-sm text-zinc-400">anshguptakmrn@gmail.com</p>
-              </a>
-              <a
-                href="https://github.com/digitaldodo"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="focus-ring premium-card rounded-lg border border-white/10 bg-white/5 p-5 backdrop-blur-md transition hover:-translate-y-0.5 hover:border-brand-gold/45"
-              >
-                <Code2 className="relative z-10 mb-4 text-brand-gold" aria-hidden="true" size={22} />
-                <p className="font-heading relative z-10 font-bold text-white">GitHub</p>
-                <p className="relative z-10 mt-2 break-all text-sm text-zinc-400">github.com/digitaldodo</p>
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="connect" className="section-shell relative z-10 scroll-mt-28 py-20">
-        <ExecutiveContactCard />
-      </section>
-
+      <ProjectSection />
+      <CredentialsSection />
+      <ContactSection />
       <Footer />
     </main>
   );
