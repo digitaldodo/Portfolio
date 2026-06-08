@@ -649,30 +649,33 @@ export default function Home() {
 
         <motion.div className="min-w-0" style={{ y: prefersReducedMotion ? 0 : heroCopyY }}>
           <motion.div
-            className="hero-logo-shell mb-7 inline-flex h-16 w-16 items-center justify-center rounded-lg border border-white/10 bg-black p-1 sm:h-20 sm:w-20"
+            className="mb-8 flex max-w-3xl items-center gap-4 sm:gap-5"
           >
-            <Image
-              src={logoPath}
-              alt="Ansh Gupta logo"
-              width={92}
-              height={92}
-              className="portfolio-logo h-[3.7rem] w-[3.7rem] sm:h-[4.7rem] sm:w-[4.7rem]"
-              priority
-            />
+            <div className="hero-logo-shell inline-flex h-14 w-14 shrink-0 items-center justify-center rounded-xl border border-white/[0.08] bg-white/[0.035] p-1 sm:h-[4.25rem] sm:w-[4.25rem]">
+              <Image
+                src={logoPath}
+                alt="Ansh Gupta logo"
+                width={92}
+                height={92}
+                className="portfolio-logo h-12 w-12 sm:h-[3.7rem] sm:w-[3.7rem]"
+                priority
+              />
+            </div>
+            <div className="min-w-0">
+              <motion.h1
+                className="font-heading text-[2.25rem] font-bold leading-none text-white sm:text-[3.25rem] lg:text-[4rem]"
+              >
+                Ansh Gupta
+              </motion.h1>
+              <motion.p
+                className="mt-2 max-w-md text-sm font-medium leading-6 text-zinc-300 sm:text-base"
+              >
+                Product-minded Software Engineer
+              </motion.p>
+            </div>
           </motion.div>
-          <motion.div
-            className="mb-6 inline-flex items-center gap-2 rounded-md border border-white/10 bg-white/[0.04] px-3 py-2 text-sm font-semibold text-zinc-300 backdrop-blur-md"
-          >
-            <Zap aria-hidden="true" size={16} />
-            Product-minded software engineer
-          </motion.div>
-          <motion.h1
-            className="font-heading max-w-4xl text-4xl font-bold leading-[1.05] text-white sm:text-6xl lg:text-7xl"
-          >
-            Ansh Gupta
-          </motion.h1>
           <motion.p
-            className="font-heading mt-5 max-w-3xl text-xl font-bold leading-tight text-zinc-100 sm:text-3xl lg:text-4xl"
+            className="font-heading max-w-3xl text-2xl font-semibold leading-tight text-zinc-100 sm:text-3xl"
           >
             Computer Science Undergraduate & Software Developer
           </motion.p>
