@@ -248,45 +248,47 @@ function AnimatedNumber({
 
 function PerformanceIndex() {
   return (
-    <div className="relative">
+    <div className="relative w-full max-w-[26.5rem] lg:justify-self-end">
       <motion.div
         whileHover={{ y: -3 }}
         transition={{ type: "spring", stiffness: 190, damping: 18 }}
-        className="glass-panel rounded-lg p-4"
+        className="glass-panel hero-stats-panel rounded-lg p-2.5 sm:p-3"
       >
-        <div className="relative overflow-hidden rounded-lg border border-white/10 bg-surface-charcoal p-5">
-          <div className="relative z-10 flex items-center justify-between border-b border-white/10 pb-4">
+        <div className="relative overflow-hidden rounded-lg border border-white/[0.08] bg-surface-charcoal/90 p-3.5">
+          <div className="relative z-10 flex items-center justify-between border-b border-white/[0.08] pb-3">
             <div>
               <p className="font-heading text-sm font-bold text-brand-gold">Engineering Snapshot</p>
-              <p className="mt-1 text-sm text-zinc-400">Focused full-stack execution</p>
+              <p className="mt-1 text-xs text-zinc-500 sm:text-sm">Focused full-stack execution</p>
             </div>
-            <Code2 className="text-brand-gold" aria-hidden="true" size={24} />
+            <Code2 className="text-brand-gold/85" aria-hidden="true" size={21} />
           </div>
 
-          <div className="relative z-10 grid gap-3 py-5 sm:grid-cols-2">
+          <div className="relative z-10 grid gap-2 py-3">
             {careerStats.map(({ metricLabel, label, value, suffix, decimals, detail, icon: Icon }) => (
               <div
                 key={label}
-                className="premium-card rounded-md border border-white/10 bg-white/5 p-4 backdrop-blur-md"
+                className="premium-card rounded-md border border-white/[0.08] bg-white/[0.035] px-3 py-2.5 backdrop-blur-md"
               >
-                <div className="relative z-10 flex items-start justify-between gap-4">
-                  <div>
-                    <p className="font-heading text-[11px] font-bold uppercase text-brand-gold/80">{metricLabel}</p>
-                    <p className="font-heading mt-2 text-3xl font-bold text-white">
-                      <AnimatedNumber value={value} decimals={decimals} suffix={suffix} />
-                    </p>
-                    <p className="mt-1 text-sm font-semibold text-zinc-300">{label}</p>
+                <div className="relative z-10 flex items-center gap-2.5">
+                  <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md border border-white/[0.08] bg-black/25 text-brand-gold/75">
+                    <Icon aria-hidden="true" size={15} />
                   </div>
-                  <Icon aria-hidden="true" size={20} className="mt-1 shrink-0 text-brand-gold/80" />
+                  <div className="min-w-0 flex-1">
+                    <p className="font-heading text-[10px] font-bold uppercase leading-3 text-brand-gold/70">{metricLabel}</p>
+                    <p className="mt-1 truncate text-xs font-semibold leading-4 text-zinc-300">{label}</p>
+                  </div>
+                  <p className="font-heading shrink-0 text-xl font-bold leading-none text-white">
+                      <AnimatedNumber value={value} decimals={decimals} suffix={suffix} />
+                  </p>
                 </div>
-                <p className="relative z-10 mt-3 text-xs leading-5 text-zinc-500">{detail}</p>
+                <p className="sr-only">{detail}</p>
               </div>
             ))}
           </div>
 
-          <div className="relative z-10 rounded-md border border-white/10 bg-white/[0.035] p-4">
-            <p className="font-heading text-lg font-bold text-white">Current Focus</p>
-            <p className="mt-2 leading-7 text-zinc-300">
+          <div className="relative z-10 rounded-md border border-white/[0.08] bg-white/[0.03] p-3">
+            <p className="font-heading text-base font-bold text-white">Current Focus</p>
+            <p className="mt-1.5 text-xs leading-5 text-zinc-400">
               Designing clean product flows, secure backends, and frontend systems that feel fast, reliable, and deliberate from the first click.
             </p>
           </div>
@@ -639,116 +641,109 @@ export default function Home() {
 
       <section
         id="home"
-        className="section-shell relative z-10 grid min-h-screen items-center gap-12 pb-20 pt-32 lg:grid-cols-[1.05fr_0.95fr]"
+        className="section-shell hero-section relative z-10 pb-16 pt-28 sm:pt-32"
       >
-        <motion.div
-          className="min-w-0 lg:col-span-2"
-        >
-          <PerformanceStrip />
-        </motion.div>
+        <div className="hero-ambient" aria-hidden="true" />
 
-        <motion.div className="min-w-0" style={{ y: prefersReducedMotion ? 0 : heroCopyY }}>
-          <motion.div
-            className="mb-8 flex max-w-3xl items-center gap-4 sm:gap-5"
-          >
-            <div className="hero-logo-shell inline-flex h-14 w-14 shrink-0 items-center justify-center rounded-xl border border-white/[0.08] bg-white/[0.035] p-1 sm:h-[4.25rem] sm:w-[4.25rem]">
-              <Image
-                src={logoPath}
-                alt="Ansh Gupta logo"
-                width={92}
-                height={92}
-                className="portfolio-logo h-12 w-12 sm:h-[3.7rem] sm:w-[3.7rem]"
-                priority
-              />
-            </div>
-            <div className="min-w-0">
-              <motion.h1
-                className="font-heading text-[2.25rem] font-bold leading-none text-white sm:text-[3.25rem] lg:text-[4rem]"
-              >
-                Ansh Gupta
-              </motion.h1>
-              <motion.p
-                className="mt-2 max-w-md text-sm font-medium leading-6 text-zinc-300 sm:text-base"
-              >
-                Product-minded Software Engineer
+        <div className="hero-stage relative z-10 grid min-w-0 gap-10 lg:grid-cols-[minmax(0,1.5fr)_minmax(22rem,0.95fr)] lg:items-center lg:gap-12">
+          <motion.div className="min-w-0" style={{ y: prefersReducedMotion ? 0 : heroCopyY }}>
+            <div className="hero-copy">
+              <motion.div className="mb-7 flex max-w-3xl items-center gap-4 sm:gap-5">
+                <div className="hero-logo-shell inline-flex h-14 w-14 shrink-0 items-center justify-center rounded-xl border border-white/[0.08] bg-white/[0.035] p-1 sm:h-[4.25rem] sm:w-[4.25rem]">
+                  <Image
+                    src={logoPath}
+                    alt="Ansh Gupta logo"
+                    width={92}
+                    height={92}
+                    className="portfolio-logo h-12 w-12 sm:h-[3.7rem] sm:w-[3.7rem]"
+                    priority
+                  />
+                </div>
+                <div className="min-w-0">
+                  <motion.h1 className="font-heading text-[2.35rem] font-bold leading-none text-white sm:text-[3.35rem] lg:text-[4.4rem]">
+                    Ansh Gupta
+                  </motion.h1>
+                  <motion.p className="mt-2 max-w-md text-sm font-medium leading-6 text-zinc-300 sm:text-base">
+                    Product-minded Software Engineer
+                  </motion.p>
+                </div>
+              </motion.div>
+              <motion.h2 className="font-heading hero-headline max-w-3xl text-[2.35rem] font-bold leading-[1] text-zinc-100 sm:text-[3.05rem] lg:text-[3.45rem] xl:text-[3.8rem]">
+                <span className="block">Computer Science</span>
+                <span className="block">undergraduate</span>
+                <span className="block text-zinc-400">software developer.</span>
+              </motion.h2>
+              <motion.p className="mt-6 max-w-2xl text-base leading-8 text-zinc-300 sm:text-lg">
+                Building scalable enterprise systems with product clarity, careful interfaces, and dependable backend architecture.
               </motion.p>
+              <motion.div className="hero-actions mt-8 flex flex-col gap-2.5 sm:flex-row sm:flex-wrap sm:items-center">
+                <motion.a
+                  whileHover={buttonHover}
+                  whileTap={{ scale: 0.98 }}
+                  href="#projects"
+                  className="focus-ring glow-button inline-flex h-12 items-center justify-center gap-2 rounded-md bg-brand-gold px-5 py-3 text-sm font-bold text-surface-black transition-colors hover:bg-white sm:px-6"
+                >
+                  View Project Work
+                  <ArrowUpRight aria-hidden="true" size={18} />
+                </motion.a>
+                <motion.a
+                  whileHover={buttonHover}
+                  whileTap={{ scale: 0.98 }}
+                  href="#connect"
+                  className="focus-ring glow-button inline-flex h-12 items-center justify-center gap-2 rounded-md border border-white/[0.09] bg-white/[0.035] px-5 py-3 text-sm font-semibold text-zinc-200 backdrop-blur-md transition-colors hover:border-brand-gold/40 hover:text-white"
+                >
+                  Contact Me
+                  <Mail aria-hidden="true" size={18} />
+                </motion.a>
+                <div className="group relative w-full sm:w-auto">
+                  <motion.a
+                    whileHover={buttonHover}
+                    whileTap={{ scale: 0.98 }}
+                    href={resumePath}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="focus-ring glow-button inline-flex h-12 w-full items-center justify-center gap-2 rounded-md border border-white/[0.09] bg-white/[0.03] px-5 py-3 text-sm font-semibold text-zinc-300 backdrop-blur-md transition-colors hover:border-brand-gold/40 hover:text-white sm:w-auto"
+                  >
+                    View Resume
+                    <Eye aria-hidden="true" size={18} />
+                  </motion.a>
+                  <div className="pointer-events-none absolute left-0 top-[calc(100%+0.75rem)] z-20 hidden w-64 rounded-lg border border-white/10 bg-surface-charcoal/95 p-4 text-left opacity-0 shadow-[0_20px_60px_rgba(0,0,0,0.36)] backdrop-blur-xl transition duration-200 group-hover:translate-y-0 group-hover:opacity-100 md:block md:translate-y-1">
+                    <p className="font-heading text-sm font-bold text-white">Ansh Gupta Resume</p>
+                    <p className="mt-1 text-xs leading-5 text-zinc-400">PDF resume with education, project work, technical skills, certifications, and contact details.</p>
+                  </div>
+                </div>
+                <motion.a
+                  whileHover={buttonHover}
+                  whileTap={{ scale: 0.98 }}
+                  href={resumePath}
+                  download="Ansh_Gupta_Resume.pdf"
+                  className="focus-ring glow-button inline-flex h-12 items-center justify-center gap-2 rounded-md border border-brand-gold/35 bg-brand-gold/[0.08] px-5 py-3 text-sm font-semibold text-brand-gold transition-colors hover:border-brand-gold/60 hover:bg-brand-gold/15 hover:text-white"
+                >
+                  Download Resume
+                  <Download aria-hidden="true" size={18} />
+                </motion.a>
+                <motion.a
+                  whileHover={buttonHover}
+                  whileTap={{ scale: 0.98 }}
+                  href="https://github.com/digitaldodo"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Open GitHub profile"
+                  className="focus-ring glow-button inline-flex h-12 w-full items-center justify-center rounded-md border border-white/[0.09] bg-white/[0.03] text-zinc-300 backdrop-blur-md transition-colors hover:border-brand-gold/40 hover:text-white sm:w-12"
+                >
+                  <GitHubIcon />
+                </motion.a>
+              </motion.div>
             </div>
           </motion.div>
-          <motion.p
-            className="font-heading max-w-3xl text-2xl font-semibold leading-tight text-zinc-100 sm:text-3xl"
-          >
-            <span className="block sm:inline">Computer Science</span>{" "}
-            <span className="block sm:inline">Undergraduate & Software Developer</span>
-          </motion.p>
-          <motion.p
-            className="mt-5 max-w-2xl text-base leading-8 text-zinc-300 sm:text-xl"
-          >
-            Building scalable enterprise systems with product clarity, careful interfaces, and dependable backend architecture.
-          </motion.p>
-          <motion.div
-            className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap"
-          >
-            <motion.a
-              whileHover={buttonHover}
-              whileTap={{ scale: 0.98 }}
-              href="#projects"
-              className="focus-ring glow-button inline-flex items-center justify-center gap-2 rounded-md bg-brand-gold px-5 py-3 text-sm font-bold text-surface-black transition-colors hover:bg-white"
-            >
-              View Project Work
-              <ArrowUpRight aria-hidden="true" size={18} />
-            </motion.a>
-            <motion.a
-              whileHover={buttonHover}
-              whileTap={{ scale: 0.98 }}
-              href="#connect"
-              className="focus-ring glow-button inline-flex items-center justify-center gap-2 rounded-md border border-white/10 bg-white/[0.04] px-5 py-3 text-sm font-bold text-zinc-100 backdrop-blur-md transition-colors hover:border-brand-gold/45 hover:text-white"
-            >
-              Contact Me
-              <Mail aria-hidden="true" size={18} />
-            </motion.a>
-            <div className="group relative w-full sm:w-auto">
-              <motion.a
-                whileHover={buttonHover}
-                whileTap={{ scale: 0.98 }}
-                href={resumePath}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="focus-ring glow-button inline-flex h-12 w-full items-center justify-center gap-2 rounded-md border border-white/10 bg-white/[0.04] px-5 py-3 text-sm font-bold text-zinc-100 backdrop-blur-md transition-colors hover:border-brand-gold/45 hover:text-white sm:w-auto"
-              >
-                View Resume
-                <Eye aria-hidden="true" size={18} />
-              </motion.a>
-              <div className="pointer-events-none absolute left-0 top-[calc(100%+0.75rem)] z-20 hidden w-64 rounded-lg border border-white/10 bg-surface-charcoal/95 p-4 text-left opacity-0 shadow-[0_20px_60px_rgba(0,0,0,0.36)] backdrop-blur-xl transition duration-200 group-hover:translate-y-0 group-hover:opacity-100 md:block md:translate-y-1">
-                <p className="font-heading text-sm font-bold text-white">Ansh Gupta Resume</p>
-                <p className="mt-1 text-xs leading-5 text-zinc-400">PDF resume with education, project work, technical skills, certifications, and contact details.</p>
-              </div>
-            </div>
-            <motion.a
-              whileHover={buttonHover}
-              whileTap={{ scale: 0.98 }}
-              href={resumePath}
-              download="Ansh_Gupta_Resume.pdf"
-              className="focus-ring glow-button inline-flex h-12 items-center justify-center gap-2 rounded-md bg-brand-gold px-5 py-3 text-sm font-bold text-surface-black transition-colors hover:bg-white"
-            >
-              Download Resume
-              <Download aria-hidden="true" size={18} />
-            </motion.a>
-            <motion.a
-              whileHover={buttonHover}
-              whileTap={{ scale: 0.98 }}
-              href="https://github.com/digitaldodo"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Open GitHub profile"
-              className="focus-ring glow-button inline-flex h-12 w-full items-center justify-center rounded-md border border-white/10 bg-white/[0.04] text-zinc-100 backdrop-blur-md transition-colors hover:border-brand-gold/45 hover:text-white sm:w-12"
-            >
-              <GitHubIcon />
-            </motion.a>
-          </motion.div>
-        </motion.div>
 
-        <motion.div style={{ y: prefersReducedMotion ? 0 : heroVisualY }}>
-          <PerformanceIndex />
+          <motion.div className="relative min-w-0 lg:pt-4" style={{ y: prefersReducedMotion ? 0 : heroVisualY }}>
+            <PerformanceIndex />
+          </motion.div>
+        </div>
+
+        <motion.div className="relative z-10 mt-8 min-w-0 sm:mt-10 lg:mt-6">
+          <PerformanceStrip />
         </motion.div>
       </section>
 
