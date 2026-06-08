@@ -677,7 +677,8 @@ export default function Home() {
           <motion.p
             className="font-heading max-w-3xl text-2xl font-semibold leading-tight text-zinc-100 sm:text-3xl"
           >
-            Computer Science Undergraduate & Software Developer
+            <span className="block sm:inline">Computer Science</span>{" "}
+            <span className="block sm:inline">Undergraduate & Software Developer</span>
           </motion.p>
           <motion.p
             className="mt-5 max-w-2xl text-base leading-8 text-zinc-300 sm:text-xl"

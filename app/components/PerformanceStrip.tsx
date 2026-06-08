@@ -1,27 +1,27 @@
 "use client";
 
 const performanceSignals = [
-  ["Current Mode", "Building scalable product systems"],
-  ["Execution", "Reliable release rhythm"],
-  ["Systems", "Full-stack, mobile, backend"],
-  ["Practice", "200+ problems solved"],
-  ["Deployments", "Live production surfaces"],
-  ["Status", "Available for focused teams"]
+  "Product-minded software engineer",
+  "Full-stack systems + mobile",
+  "Available for impactful teams"
 ];
 
 export function PerformanceStrip() {
   return (
     <aside
-      className="performance-strip relative w-full max-w-full overflow-hidden rounded-lg border border-white/10 bg-white/[0.04] shadow-[0_16px_48px_rgba(0,0,0,0.24)] backdrop-blur-xl"
-      aria-label="Portfolio engineering signals"
+      className="w-full max-w-full border-y border-white/[0.08] bg-white/[0.018] backdrop-blur-xl"
+      aria-label="Portfolio focus"
     >
-      <div className="flex flex-wrap items-center gap-x-6 gap-y-2 px-4 py-3">
-        {performanceSignals.map(([label, value]) => (
-          <div key={label} className="flex min-w-0 items-center gap-3 text-xs sm:text-sm">
-            <span className="h-1.5 w-1.5 rounded-full bg-brand-gold/80" />
-            <span className="font-heading shrink-0 font-bold uppercase text-brand-gold">{label}:</span>
-            <span className="font-semibold text-zinc-200">{value}</span>
-          </div>
+      <div className="grid gap-0 sm:grid-cols-3">
+        {performanceSignals.map((signal, index) => (
+          <p
+            key={signal}
+            className={`flex min-h-12 items-center px-1 py-3 text-sm font-medium leading-6 text-zinc-300 sm:justify-center sm:px-5 sm:text-center ${
+              index > 0 ? "border-t border-white/[0.06] sm:border-l sm:border-t-0" : ""
+            }`}
+          >
+            {signal}
+          </p>
         ))}
       </div>
     </aside>
