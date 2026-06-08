@@ -57,14 +57,10 @@ export function SkillsSection() {
       className="section-shell relative z-10 scroll-mt-28 py-20"
     >
       <div className="relative overflow-hidden rounded-lg border border-white/10 bg-white/[0.035] px-5 py-8 shadow-premium-glow backdrop-blur-xl sm:px-8 lg:px-10">
-        <div className="pointer-events-none absolute inset-x-6 top-8 h-px bg-gradient-to-r from-transparent via-brand-gold to-transparent" />
-        <div className="pointer-events-none absolute left-1/2 top-8 h-20 w-px -translate-x-1/2 bg-gradient-to-b from-brand-gold/80 to-transparent" />
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-brand-crimson/10 to-transparent" />
-
         <div className="relative mx-auto max-w-4xl text-center">
           <motion.p
             variants={pillVariants}
-            className="font-heading inline-flex rounded-full border border-brand-gold/40 bg-brand-gold/10 px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-brand-gold backdrop-blur-md"
+            className="font-heading inline-flex rounded-md border border-white/10 bg-white/[0.04] px-4 py-2 text-xs font-bold uppercase text-brand-gold backdrop-blur-md"
           >
             Technical Skills
           </motion.p>
@@ -81,7 +77,7 @@ export function SkillsSection() {
             <div key={group.category} className="grid gap-4 lg:grid-cols-[220px_1fr] lg:items-start">
               <motion.div
                 variants={pillVariants}
-                className="font-heading inline-flex w-fit rounded-full border border-white/10 bg-white/10 px-4 py-2 text-sm font-bold text-brand-gold backdrop-blur-lg"
+                className="font-heading inline-flex w-fit rounded-md border border-white/10 bg-white/[0.04] px-4 py-2 text-sm font-bold text-brand-gold backdrop-blur-lg"
               >
                 {group.category}
               </motion.div>
@@ -92,10 +88,9 @@ export function SkillsSection() {
                     key={skill}
                     variants={pillVariants}
                     whileHover={{
-                      x: 5,
-                      y: -5,
+                      y: -2,
                       borderColor: "#D4AF37",
-                      boxShadow: "0 0 0 1px rgba(212, 175, 55, 0.9), 0 0 24px rgba(212, 175, 55, 0.42)"
+                      boxShadow: "0 0 0 1px rgba(212, 175, 55, 0.28)"
                     }}
                     transition={{
                       x: { type: "spring", stiffness: 320, damping: 18 },
@@ -103,7 +98,7 @@ export function SkillsSection() {
                       borderColor: { duration: 0 },
                       boxShadow: { duration: 0 }
                     }}
-                    className="font-heading inline-flex cursor-default items-center rounded-full border border-white/15 bg-white/10 px-5 py-2.5 text-sm font-semibold text-zinc-100 backdrop-blur-xl hover:border-brand-gold hover:shadow-[0_0_0_1px_rgba(212,175,55,0.9),0_0_24px_rgba(212,175,55,0.42)] sm:text-base"
+                    className="font-heading inline-flex cursor-default items-center rounded-md border border-white/15 bg-white/[0.055] px-5 py-2.5 text-sm font-semibold text-zinc-100 backdrop-blur-xl hover:border-brand-gold/40 sm:text-base"
                   >
                     {skill}
                   </motion.span>

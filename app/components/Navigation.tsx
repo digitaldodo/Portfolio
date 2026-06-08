@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import {
+  BadgeCheck,
   BriefcaseBusiness,
   Clock3,
   Download,
@@ -10,9 +11,8 @@ import {
   FileText,
   Flame,
   Home,
+  Layers3,
   Mail,
-  Medal,
-  ShieldCheck,
   UserRound,
   X
 } from "lucide-react";
@@ -23,9 +23,9 @@ const navItems = [
   { label: "About", href: "#about", icon: UserRound },
   { label: "Mindset", href: "#mindset", icon: Flame },
   { label: "Stack", href: "#stack", icon: BriefcaseBusiness },
-  { label: "Projects", href: "#projects", icon: Medal },
+  { label: "Projects", href: "#projects", icon: Layers3 },
   { label: "Execution Log", href: "#execution-log", icon: Clock3 },
-  { label: "Credentials", href: "#credentials", icon: ShieldCheck },
+  { label: "Credentials", href: "#credentials", icon: BadgeCheck },
   { label: "Contact", href: "#contact", icon: Mail }
 ];
 
@@ -72,19 +72,22 @@ export function Navigation() {
       <nav className="section-shell nav-shell flex min-h-16 items-center justify-between gap-2 rounded-lg px-3 py-2">
         <a
           href="#home"
-          className="focus-ring group inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-md border border-brand-gold/25 bg-black/35 transition hover:border-brand-gold/55 hover:bg-brand-gold/10"
+          className="focus-ring group inline-flex h-12 shrink-0 items-center gap-3 rounded-md px-1.5 pr-3 transition hover:bg-white/[0.04]"
           aria-label="Go to home"
         >
-          <Image src={logoPath} alt="" width={44} height={44} className="portfolio-logo h-11 w-11 transition duration-300 group-hover:scale-105" priority />
+          <span className="flex h-9 w-9 items-center justify-center rounded-md border border-white/10 bg-black">
+            <Image src={logoPath} alt="" width={36} height={36} className="portfolio-logo h-9 w-9" priority />
+          </span>
+          <span className="font-heading hidden text-sm font-semibold text-white sm:inline">Ansh Gupta</span>
         </a>
 
-        <div className="nav-scrollbar flex flex-1 items-center justify-center gap-1 overflow-x-auto px-1">
+        <div className="nav-scrollbar flex min-w-0 flex-1 items-center justify-start gap-1 overflow-x-auto px-1 md:justify-center">
           {navItems.map(({ label, href, icon: Icon }) => (
             <a
               key={href}
               href={href}
               data-active={activeHref === href}
-              className="focus-ring group relative inline-flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-zinc-300 transition hover:bg-white/10 hover:text-white data-[active=true]:text-white"
+              className="focus-ring group relative inline-flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-zinc-400 transition hover:bg-white/[0.055] hover:text-white data-[active=true]:text-white"
               aria-label={label}
               aria-current={activeHref === href ? "page" : undefined}
             >
@@ -92,7 +95,7 @@ export function Navigation() {
               <Icon
                 aria-hidden="true"
                 size={16}
-                className="text-zinc-500 transition group-hover:text-brand-gold group-data-[active=true]:text-brand-gold"
+                className="text-zinc-600 transition group-hover:text-brand-gold group-data-[active=true]:text-brand-gold"
               />
               <span className="hidden whitespace-nowrap md:inline">{label}</span>
             </a>
@@ -101,7 +104,7 @@ export function Navigation() {
 
         <a
           href="#contact"
-          className="focus-ring glow-button hidden items-center justify-center gap-2 rounded-md border border-brand-gold/35 bg-brand-gold/10 px-3 py-2 text-sm font-semibold text-brand-gold transition hover:border-brand-gold hover:bg-brand-gold hover:text-surface-black lg:inline-flex"
+          className="focus-ring glow-button hidden items-center justify-center gap-2 rounded-md border border-white/10 bg-white/[0.04] px-3 py-2 text-sm font-semibold text-zinc-100 transition hover:border-brand-gold/45 hover:text-white lg:inline-flex"
         >
           <Mail aria-hidden="true" size={16} />
           <span className="hidden whitespace-nowrap lg:inline">Connect</span>
@@ -112,7 +115,7 @@ export function Navigation() {
             href={resumePath}
             target="_blank"
             rel="noopener noreferrer"
-            className="focus-ring glow-button inline-flex items-center justify-center gap-2 rounded-md border border-white/10 bg-white/5 px-3 py-2 text-sm font-semibold text-zinc-100 transition hover:border-brand-gold/50 hover:text-white"
+            className="focus-ring glow-button inline-flex items-center justify-center gap-2 rounded-md border border-white/10 bg-white/[0.04] px-3 py-2 text-sm font-semibold text-zinc-100 transition hover:border-brand-gold/45 hover:text-white"
           >
             <Eye aria-hidden="true" size={16} />
             <span className="whitespace-nowrap">View Resume</span>
@@ -133,7 +136,7 @@ export function Navigation() {
             aria-label={isResumeMenuOpen ? "Close resume menu" : "Open resume menu"}
             aria-expanded={isResumeMenuOpen}
             onClick={() => setIsResumeMenuOpen((isOpen) => !isOpen)}
-            className="focus-ring glow-button inline-flex h-10 w-10 items-center justify-center rounded-md border border-brand-gold/35 bg-brand-gold/10 text-brand-gold transition hover:border-brand-gold hover:bg-brand-gold hover:text-surface-black"
+            className="focus-ring glow-button inline-flex h-10 w-10 items-center justify-center rounded-md border border-white/10 bg-white/[0.04] text-zinc-100 transition hover:border-brand-gold/45 hover:text-white"
           >
             {isResumeMenuOpen ? <X aria-hidden="true" size={17} /> : <FileText aria-hidden="true" size={17} />}
           </button>
@@ -143,7 +146,7 @@ export function Navigation() {
               initial={{ opacity: 0, y: -8, scale: 0.98 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               transition={{ duration: 0.18, ease: "easeOut" }}
-              className="absolute right-0 top-12 w-56 rounded-lg border border-white/10 bg-surface-charcoal/95 p-2 shadow-[0_22px_70px_rgba(0,0,0,0.45),0_0_28px_rgba(212,175,55,0.16)] backdrop-blur-xl"
+              className="absolute right-0 top-12 w-56 rounded-lg border border-white/10 bg-surface-charcoal/95 p-2 shadow-[0_22px_70px_rgba(0,0,0,0.36)] backdrop-blur-xl"
             >
               <a
                 href={resumePath}

@@ -25,7 +25,7 @@ const config = {
         body: ["var(--font-inter)", "sans-serif"]
       },
       boxShadow: {
-        "premium-glow": "0 18px 70px rgba(0, 0, 0, 0.38), 0 0 26px rgba(212, 175, 55, 0.16), 0 0 28px rgba(220, 38, 38, 0.1)"
+        "premium-glow": "0 18px 56px rgba(0, 0, 0, 0.32)"
       }
     }
   },

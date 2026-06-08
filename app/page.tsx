@@ -26,16 +26,11 @@ import {
 import { animate, motion, useInView, useMotionValue, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
-import type { MouseEvent } from "react";
+import { useEffect, useRef } from "react";
 import { PerformanceStrip } from "./components/PerformanceStrip";
 import { Navigation } from "./components/Navigation";
 import { SkillsSection } from "./components/SkillsSection";
 
-const AmbientLighting = dynamic(
-  () => import("./components/AmbientLighting").then((module) => module.AmbientLighting),
-  { ssr: false }
-);
 const ScrollProgressRail = dynamic(
   () => import("./components/ScrollProgressRail").then((module) => module.ScrollProgressRail),
   { ssr: false }
@@ -185,7 +180,7 @@ const executionLog = [
   {
     title: "Improved dashboard UX",
     description:
-      "Refined high-signal views so teams can scan visitor status and security activity faster.",
+      "Refined high-value views so teams can understand visitor status and security activity faster.",
     icon: Database
   },
   {
@@ -199,11 +194,8 @@ const executionLog = [
 const resumePath = "/assets/Ansh_Gupta_Resume.pdf";
 const logoPath = "/assets/ag-logo.svg";
 
-const entranceTransition = { duration: 0.4, ease: "easeOut" as const };
-
 const buttonHover = {
-  scale: 1.05,
-  filter: "drop-shadow(0 0 18px rgba(220, 38, 38, 0.72))"
+  scale: 1.02
 };
 
 function SectionHeading({
@@ -257,19 +249,18 @@ function AnimatedNumber({
 function PerformanceIndex() {
   return (
     <div className="relative">
-      <div className="absolute inset-x-8 -top-5 h-px bg-gradient-to-r from-transparent via-brand-gold to-transparent" />
       <motion.div
-        whileHover={{ y: -6 }}
+        whileHover={{ y: -3 }}
         transition={{ type: "spring", stiffness: 190, damping: 18 }}
-        className="glass-panel premium-card rounded-lg p-4"
+        className="glass-panel rounded-lg p-4"
       >
-        <div className="index-scan relative overflow-hidden rounded-lg border border-white/10 bg-surface-charcoal p-5">
+        <div className="relative overflow-hidden rounded-lg border border-white/10 bg-surface-charcoal p-5">
           <div className="relative z-10 flex items-center justify-between border-b border-white/10 pb-4">
             <div>
-              <p className="font-heading text-sm font-bold text-brand-gold">ENGINEERING INDEX</p>
+              <p className="font-heading text-sm font-bold text-brand-gold">Engineering Snapshot</p>
               <p className="mt-1 text-sm text-zinc-400">Focused full-stack execution</p>
             </div>
-            <Target className="text-brand-gold drop-shadow-[0_0_12px_rgba(212,175,55,0.44)]" aria-hidden="true" size={24} />
+            <Code2 className="text-brand-gold" aria-hidden="true" size={24} />
           </div>
 
           <div className="relative z-10 grid gap-3 py-5 sm:grid-cols-2">
@@ -286,14 +277,14 @@ function PerformanceIndex() {
                     </p>
                     <p className="mt-1 text-sm font-semibold text-zinc-300">{label}</p>
                   </div>
-                  <Icon aria-hidden="true" size={20} className="mt-1 shrink-0 text-brand-gold" />
+                  <Icon aria-hidden="true" size={20} className="mt-1 shrink-0 text-brand-gold/80" />
                 </div>
                 <p className="relative z-10 mt-3 text-xs leading-5 text-zinc-500">{detail}</p>
               </div>
             ))}
           </div>
 
-          <div className="relative z-10 rounded-md border border-brand-crimson/35 bg-brand-crimson/10 p-4 shadow-[0_0_24px_rgba(220,38,38,0.08)]">
+          <div className="relative z-10 rounded-md border border-white/10 bg-white/[0.035] p-4">
             <p className="font-heading text-lg font-bold text-white">Current Focus</p>
             <p className="mt-2 leading-7 text-zinc-300">
               Designing clean product flows, secure backends, and frontend systems that feel fast, reliable, and deliberate from the first click.
@@ -314,9 +305,8 @@ function MindsetSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.35 }}
           transition={{ duration: 0.56, ease: "easeOut" }}
-          className="mindset-spotlight relative overflow-hidden rounded-lg border border-brand-gold/20 bg-[linear-gradient(145deg,rgba(212,175,55,0.12),rgba(255,255,255,0.04)_36%,rgba(220,38,38,0.11))] p-6 shadow-[0_28px_90px_rgba(0,0,0,0.4),0_0_34px_rgba(212,175,55,0.12)] backdrop-blur-xl sm:p-8"
+          className="mindset-spotlight relative overflow-hidden rounded-lg border border-white/10 bg-white/[0.045] p-6 shadow-premium-glow backdrop-blur-xl sm:p-8"
         >
-          <div className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-brand-gold to-transparent" />
           <div className="relative z-10">
             <p className="font-heading mb-3 text-sm font-bold uppercase text-brand-gold">Mindset</p>
             <h2 className="font-heading text-3xl font-bold leading-tight text-white sm:text-4xl">
@@ -361,7 +351,7 @@ function MindsetSection() {
                   <p className="font-heading text-xs font-bold uppercase text-brand-gold/80">{signal}</p>
                   <h3 className="font-heading mt-3 text-2xl font-bold text-white">{title}</h3>
                 </div>
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-brand-gold/35 bg-brand-gold/10 text-brand-gold shadow-[0_0_20px_rgba(212,175,55,0.16)]">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-white/10 bg-white/[0.04] text-brand-gold">
                   <Icon aria-hidden="true" size={19} />
                 </div>
               </div>
@@ -375,42 +365,16 @@ function MindsetSection() {
 }
 
 function AccessFlowCard() {
-  const [isHovered, setIsHovered] = useState(false);
-  const pointerX = useMotionValue(0);
-  const pointerY = useMotionValue(0);
-  const rotateX = useTransform(pointerY, [-0.5, 0.5], ["9deg", "-9deg"]);
-  const rotateY = useTransform(pointerX, [-0.5, 0.5], ["-11deg", "11deg"]);
-
-  function handleMouseMove(event: MouseEvent<HTMLElement>) {
-    const rect = event.currentTarget.getBoundingClientRect();
-    setIsHovered(true);
-    pointerX.set((event.clientX - rect.left) / rect.width - 0.5);
-    pointerY.set((event.clientY - rect.top) / rect.height - 0.5);
-  }
-
-  function handleMouseLeave() {
-    setIsHovered(false);
-    pointerX.set(0);
-    pointerY.set(0);
-  }
-
   return (
-    <div className="mt-10 [perspective:1200px]">
+    <div className="mt-10">
       <motion.article
-        style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
-        whileHover={{ y: -8 }}
+        whileHover={{ y: -3 }}
         transition={{ type: "spring", stiffness: 180, damping: 18 }}
-        className="glass-panel premium-card group relative overflow-hidden rounded-lg p-6 sm:p-8"
+        className="glass-panel group relative overflow-hidden rounded-lg p-6 sm:p-8"
       >
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_0%,rgba(212,175,55,0.2),transparent_30%),linear-gradient(135deg,rgba(220,38,38,0.16),transparent_46%)] opacity-80" />
-        <div className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-brand-gold to-transparent opacity-80" />
-
         <div className="relative grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-end">
           <div>
-            <div className="mb-5 inline-flex items-center gap-2 rounded-md border border-brand-crimson/40 bg-brand-crimson/10 px-3 py-2 text-sm font-bold uppercase text-brand-crimson">
+            <div className="mb-5 inline-flex items-center gap-2 rounded-md border border-white/10 bg-white/[0.04] px-3 py-2 text-sm font-semibold text-zinc-300">
               <ShieldCheck aria-hidden="true" size={16} />
               Full-stack platform
             </div>
@@ -422,12 +386,12 @@ function AccessFlowCard() {
 
           <div className="grid gap-4">
             <div className="grid gap-3 sm:grid-cols-2">
-              <div className="premium-card rounded-md border border-white/10 bg-surface-charcoal/80 p-4 backdrop-blur-md">
+              <div className="rounded-md border border-white/10 bg-surface-charcoal/80 p-4 backdrop-blur-md">
                 <ScanLine className="text-brand-gold" aria-hidden="true" size={22} />
                 <p className="font-heading mt-4 text-lg font-bold text-white">QR Access</p>
                 <p className="mt-2 text-sm leading-6 text-zinc-400">Visitor entry flows and approval gates.</p>
               </div>
-              <div className="premium-card rounded-md border border-white/10 bg-surface-charcoal/80 p-4 backdrop-blur-md">
+              <div className="rounded-md border border-white/10 bg-surface-charcoal/80 p-4 backdrop-blur-md">
                 <Smartphone className="text-brand-gold" aria-hidden="true" size={22} />
                 <p className="font-heading mt-4 text-lg font-bold text-white">Web + Mobile</p>
                 <p className="mt-2 text-sm leading-6 text-zinc-400">Dedicated interfaces for teams in motion.</p>
@@ -450,24 +414,8 @@ function AccessFlowCard() {
           {accessFlowProject.stack.map((tech, index) => (
             <motion.span
               key={tech}
-              animate={
-                isHovered
-                  ? {
-                      borderColor: "rgba(212, 175, 55, 0.88)",
-                      backgroundColor: "rgba(212, 175, 55, 0.16)",
-                      color: "#ffffff",
-                      boxShadow: "0 0 0 1px rgba(212,175,55,0.28), 0 0 22px rgba(212,175,55,0.35)"
-                    }
-                  : {
-                      borderColor: "rgba(255, 255, 255, 0.1)",
-                      backgroundColor: "rgba(255, 255, 255, 0.05)",
-                      color: "#e4e4e7",
-                      boxShadow: "0 0 0 0 rgba(212,175,55,0)"
-                    }
-              }
-              transition={{ duration: 0.22, delay: isHovered ? index * 0.1 : 0 }}
-              style={{ transitionDelay: `${index * 100}ms` }}
-              className="rounded-md border px-3 py-1.5 text-sm font-semibold backdrop-blur-md transition-[background-color,border-color,box-shadow,color] duration-300 group-hover:border-brand-gold/80 group-hover:bg-brand-gold/15 group-hover:text-white group-hover:shadow-[0_0_0_1px_rgba(212,175,55,0.28),0_0_22px_rgba(212,175,55,0.35)]"
+              transition={{ duration: 0.2, delay: index * 0.03 }}
+              className="rounded-md border border-white/10 bg-white/[0.04] px-3 py-1.5 text-sm font-semibold text-zinc-300 backdrop-blur-md transition-colors group-hover:border-brand-gold/35 group-hover:text-white"
             >
               {tech}
             </motion.span>
@@ -501,7 +449,7 @@ function ExecutionLogSection() {
         }}
         className="relative mt-12 grid gap-4"
       >
-        <div className="absolute left-5 top-5 hidden h-[calc(100%-2.5rem)] w-px bg-gradient-to-b from-brand-gold/75 via-white/15 to-brand-crimson/30 sm:block" />
+        <div className="absolute left-5 top-5 hidden h-[calc(100%-2.5rem)] w-px bg-gradient-to-b from-brand-gold/70 via-white/15 to-transparent sm:block" />
         {executionLog.map(({ title, description, icon: Icon }, index) => (
           <motion.article
             key={title}
@@ -511,7 +459,7 @@ function ExecutionLogSection() {
             }}
             className="grid gap-4 sm:grid-cols-[42px_1fr] sm:items-start"
           >
-            <div className="relative z-10 hidden h-10 w-10 items-center justify-center rounded-md border border-brand-gold/35 bg-surface-black text-brand-gold shadow-[0_0_24px_rgba(212,175,55,0.18)] sm:flex">
+            <div className="relative z-10 hidden h-10 w-10 items-center justify-center rounded-md border border-white/10 bg-surface-black text-brand-gold sm:flex">
               <Icon aria-hidden="true" size={18} />
             </div>
             <div className="premium-card rounded-lg border border-white/10 bg-white/[0.045] p-5 backdrop-blur-xl sm:p-6">
@@ -548,12 +496,12 @@ function CredentialTimelineItem({
 
   return (
     <motion.div ref={ref} style={{ opacity, y }} className="relative grid gap-4 pl-10 sm:grid-cols-[120px_1fr] sm:gap-6 sm:pl-14">
-      <div className="absolute left-[7px] top-2 h-4 w-4 rounded-full border border-brand-gold bg-surface-black shadow-premium-glow sm:left-[15px]" />
+      <div className="absolute left-[7px] top-2 h-4 w-4 rounded-full border border-brand-gold/70 bg-surface-black sm:left-[15px]" />
       <div className="font-heading text-sm font-bold text-brand-gold sm:pt-1">{item.year}</div>
       <div
         className={`premium-card rounded-lg border p-5 backdrop-blur-xl ${
           item.highlight
-            ? "border-brand-gold/35 bg-[linear-gradient(135deg,rgba(212,175,55,0.105),rgba(220,38,38,0.075),rgba(255,255,255,0.035))] shadow-[0_24px_70px_rgba(0,0,0,0.35),0_0_34px_rgba(212,175,55,0.16)]"
+            ? "border-brand-gold/35 bg-[linear-gradient(135deg,rgba(212,175,55,0.09),rgba(255,255,255,0.035))] shadow-[0_24px_64px_rgba(0,0,0,0.3)]"
             : "border-white/10 bg-white/[0.045]"
         }`}
       >
@@ -574,7 +522,7 @@ function CredentialTimelineItem({
             <p className="font-heading text-xl font-bold text-white">{item.title}</p>
             <p className="mt-2 text-sm font-semibold uppercase text-zinc-500">{item.issuer}</p>
           </div>
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-brand-gold text-surface-black shadow-[0_0_22px_rgba(212,175,55,0.32)]">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-brand-gold text-surface-black">
             {index === credentials.length - 1 ? (
               <Code2 aria-hidden="true" size={20} />
             ) : (
@@ -597,96 +545,34 @@ function GitHubIcon() {
 }
 
 function ExecutiveContactCard() {
-  const [flashKey, setFlashKey] = useState(0);
-
-  function triggerFlash() {
-    setFlashKey((key) => key + 1);
-  }
-
   return (
     <motion.article
-      onClick={triggerFlash}
-      whileTap={{ scale: 0.95 }}
-      transition={{ type: "spring", stiffness: 420, damping: 24 }}
-      className="group relative mx-auto mt-12 max-w-4xl cursor-pointer overflow-hidden rounded-lg border border-brand-gold/45 bg-[linear-gradient(115deg,#050505_0%,#171717_28%,#0b0b0b_52%,#2a090d_76%,#090909_100%)] p-5 shadow-[0_28px_90px_rgba(0,0,0,0.5),0_0_42px_rgba(212,175,55,0.16)] sm:p-7"
+      whileHover={{ y: -3 }}
+      transition={{ type: "spring", stiffness: 190, damping: 18 }}
+      className="glass-panel relative mx-auto mt-12 max-w-4xl overflow-hidden rounded-lg p-6 sm:p-8"
     >
-      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(105deg,transparent_0%,rgba(255,255,255,0.08)_18%,transparent_34%,rgba(255,225,150,0.14)_52%,transparent_68%)] opacity-70 mix-blend-screen" />
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_15%_10%,rgba(220,38,38,0.22),transparent_34%),radial-gradient(circle_at_82%_88%,rgba(212,175,55,0.2),transparent_30%)]" />
-      <div className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-brand-gold to-transparent opacity-80" />
-      <div className="pointer-events-none absolute bottom-0 right-0 top-0 w-24 bg-[linear-gradient(135deg,transparent_0%,rgba(212,175,55,0.1)_48%,rgba(220,38,38,0.16)_49%,transparent_72%)]" />
-
-      {flashKey > 0 ? (
-        <motion.div
-          key={flashKey}
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: [0, 0.85, 0], scale: [0.9, 1.03, 1.16] }}
-          transition={{ duration: 0.36, ease: "easeOut" }}
-          className="pointer-events-none absolute inset-0 z-10 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.9),rgba(212,175,55,0.35)_28%,transparent_62%)]"
-        />
-      ) : null}
-
-      <div className="relative z-10 grid gap-6 sm:grid-cols-[1fr_104px] sm:items-stretch">
-        <div className="grid gap-6 rounded-md border border-white/10 bg-black/20 p-5 backdrop-blur-md sm:p-6">
-          <div className="flex flex-wrap items-start justify-between gap-4">
-            <div>
-              <p className="font-heading text-xs font-bold uppercase text-brand-gold">Elite Builder Signal</p>
-              <h2 className="font-heading mt-3 text-3xl font-bold text-white sm:text-4xl">
-                Ready For High-Trust Product Work
-              </h2>
-            </div>
-            <div className="rounded-md border border-brand-gold/45 bg-brand-gold px-3 py-2 text-center text-surface-black">
-              <p className="font-heading text-xs font-bold uppercase">Code</p>
-              <p className="font-heading text-lg font-bold">AG / 18</p>
-            </div>
+      <div className="relative z-10 grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end">
+        <div>
+          <div className="mb-5 inline-flex items-center gap-2 rounded-md border border-white/10 bg-white/[0.04] px-3 py-2 text-sm font-semibold text-zinc-300">
+            <span className="h-1.5 w-1.5 rounded-full bg-brand-gold" />
+            Available for focused engineering teams
           </div>
-
-          <div className="grid gap-3 text-sm text-zinc-300 sm:grid-cols-3">
-            <div className="rounded-md border border-white/10 bg-white/5 p-3">
-              <p className="font-heading text-xs font-bold uppercase text-zinc-500">Standard</p>
-              <p className="mt-1 font-semibold text-white">Disciplined Build</p>
-            </div>
-            <div className="rounded-md border border-white/10 bg-white/5 p-3">
-              <p className="font-heading text-xs font-bold uppercase text-zinc-500">Mindset</p>
-              <p className="mt-1 font-semibold text-white">Calm Precision</p>
-            </div>
-            <div className="rounded-md border border-white/10 bg-white/5 p-3">
-              <p className="font-heading text-xs font-bold uppercase text-zinc-500">Signal</p>
-              <p className="mt-1 font-semibold text-white">Product Teams</p>
-            </div>
-          </div>
-
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <p className="max-w-xl text-sm leading-6 text-zinc-400">
-              Open to software engineering roles, internships, and collaborative product teams.
-            </p>
-            <motion.a
-              href="mailto:anshguptakmrn@gmail.com"
-              whileHover={buttonHover}
-              whileTap={{ scale: 0.95 }}
-              className="focus-ring glow-button inline-flex shrink-0 items-center justify-center gap-2 rounded-md bg-brand-crimson px-5 py-3 text-sm font-bold text-white shadow-premium-glow transition-colors hover:bg-red-500"
-            >
-              Start a Conversation
-              <Mail aria-hidden="true" size={18} />
-            </motion.a>
-          </div>
-        </div>
-
-        <div className="relative min-h-28 overflow-hidden rounded-md border border-white/10 bg-black/40 p-3 sm:min-h-full">
-          <div className="absolute inset-y-4 left-1/2 w-px -translate-x-1/2 bg-gradient-to-b from-transparent via-brand-gold/45 to-transparent" />
-          <motion.div
-            aria-hidden="true"
-            animate={{ top: ["12%", "88%", "12%"] }}
-            transition={{ duration: 1.25, ease: "easeInOut", repeat: Infinity }}
-            className="absolute left-2 right-2 h-0.5 rounded-full bg-red-500 opacity-0 shadow-[0_0_16px_rgba(239,68,68,0.95)] transition-opacity duration-200 group-hover:opacity-100"
-          />
-          <div
-            aria-hidden="true"
-            className="h-full min-h-24 rounded-sm bg-[repeating-linear-gradient(90deg,#f8fafc_0_2px,transparent_2px_5px,#d4af37_5px_7px,transparent_7px_13px,#dc2626_13px_14px,transparent_14px_18px)] opacity-70 sm:bg-[repeating-linear-gradient(0deg,#f8fafc_0_2px,transparent_2px_5px,#d4af37_5px_7px,transparent_7px_13px,#dc2626_13px_14px,transparent_14px_18px)]"
-          />
-          <p className="font-heading absolute bottom-3 left-1/2 -translate-x-1/2 text-[10px] font-bold uppercase text-zinc-500 sm:bottom-4 sm:[writing-mode:vertical-rl]">
-            EXECUTION-AG
+          <h2 className="font-heading max-w-2xl text-3xl font-bold text-white sm:text-4xl">
+            Building reliable products with quiet attention to detail.
+          </h2>
+          <p className="mt-4 max-w-2xl leading-7 text-zinc-400">
+            Open to software engineering roles, internships, and teams that care about clean UX, solid architecture, and steady delivery.
           </p>
         </div>
+        <motion.a
+          href="mailto:anshguptakmrn@gmail.com"
+          whileHover={buttonHover}
+          whileTap={{ scale: 0.98 }}
+          className="focus-ring glow-button inline-flex shrink-0 items-center justify-center gap-2 rounded-md bg-brand-gold px-5 py-3 text-sm font-bold text-surface-black transition-colors hover:bg-white"
+        >
+          Start a Conversation
+          <Mail aria-hidden="true" size={18} />
+        </motion.a>
       </div>
     </motion.article>
   );
@@ -741,7 +627,6 @@ export default function Home() {
     <main className="relative min-h-screen overflow-hidden bg-transparent text-white">
       <Navigation />
       <ScrollProgressRail />
-      <AmbientLighting />
 
       <motion.div
         style={{ y: prefersReducedMotion ? 0 : ambientY }}
@@ -749,7 +634,7 @@ export default function Home() {
       />
       <motion.div
         style={{ y: prefersReducedMotion ? 0 : glowY }}
-        className="pointer-events-none fixed inset-x-0 top-0 z-0 h-28 border-b border-white/5 bg-gradient-to-b from-brand-crimson/18 via-brand-gold/5 to-transparent"
+        className="pointer-events-none fixed inset-x-0 top-0 z-0 h-28 border-b border-white/5 bg-gradient-to-b from-white/[0.035] via-brand-gold/[0.025] to-transparent"
       />
 
       <section
@@ -757,74 +642,53 @@ export default function Home() {
         className="section-shell relative z-10 grid min-h-screen items-center gap-12 pb-20 pt-32 lg:grid-cols-[1.05fr_0.95fr]"
       >
         <motion.div
-          initial={{ y: -14, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ ...entranceTransition, delay: 0.06 }}
           className="min-w-0 lg:col-span-2"
         >
           <PerformanceStrip />
         </motion.div>
 
-        <motion.div style={{ y: prefersReducedMotion ? 0 : heroCopyY }}>
+        <motion.div className="min-w-0" style={{ y: prefersReducedMotion ? 0 : heroCopyY }}>
           <motion.div
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ ...entranceTransition, delay: 0.03 }}
-            className="hero-logo-shell mb-7 inline-flex h-20 w-20 items-center justify-center rounded-lg border border-brand-gold/30 bg-black/30 p-1 backdrop-blur-md sm:h-24 sm:w-24"
+            className="hero-logo-shell mb-7 inline-flex h-16 w-16 items-center justify-center rounded-lg border border-white/10 bg-black p-1 sm:h-20 sm:w-20"
           >
             <Image
               src={logoPath}
               alt="Ansh Gupta logo"
               width={92}
               height={92}
-              className="portfolio-logo h-[4.6rem] w-[4.6rem] sm:h-[5.7rem] sm:w-[5.7rem]"
+              className="portfolio-logo h-[3.7rem] w-[3.7rem] sm:h-[4.7rem] sm:w-[4.7rem]"
               priority
             />
           </motion.div>
           <motion.div
-            initial={{ x: -50, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={entranceTransition}
-            className="mb-6 inline-flex items-center gap-2 rounded-md border border-brand-gold/30 bg-brand-gold/10 px-3 py-2 text-sm font-semibold text-brand-gold backdrop-blur-md"
+            className="mb-6 inline-flex items-center gap-2 rounded-md border border-white/10 bg-white/[0.04] px-3 py-2 text-sm font-semibold text-zinc-300 backdrop-blur-md"
           >
             <Zap aria-hidden="true" size={16} />
-            Prepare Relentlessly. Build Precisely.
+            Product-minded software engineer
           </motion.div>
           <motion.h1
-            initial={{ x: -50, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ ...entranceTransition, delay: 0.08 }}
-            className="font-heading max-w-4xl text-5xl font-bold leading-[1.02] text-white sm:text-6xl lg:text-7xl"
+            className="font-heading max-w-4xl text-4xl font-bold leading-[1.05] text-white sm:text-6xl lg:text-7xl"
           >
             Ansh Gupta
           </motion.h1>
           <motion.p
-            initial={{ x: -50, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ ...entranceTransition, delay: 0.16 }}
-            className="font-heading mt-5 max-w-3xl text-2xl font-bold leading-tight text-brand-gold sm:text-3xl lg:text-4xl"
+            className="font-heading mt-5 max-w-3xl text-xl font-bold leading-tight text-zinc-100 sm:text-3xl lg:text-4xl"
           >
             Computer Science Undergraduate & Software Developer
           </motion.p>
           <motion.p
-            initial={{ x: -50, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ ...entranceTransition, delay: 0.2 }}
-            className="mt-5 max-w-2xl text-lg leading-8 text-zinc-300 sm:text-xl"
+            className="mt-5 max-w-2xl text-base leading-8 text-zinc-300 sm:text-xl"
           >
-            Building scalable enterprise solutions with disciplined execution, product clarity, and a premium engineering standard.
+            Building scalable enterprise systems with product clarity, careful interfaces, and dependable backend architecture.
           </motion.p>
           <motion.div
-            initial={{ x: -50, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ ...entranceTransition, delay: 0.24 }}
             className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap"
           >
             <motion.a
               whileHover={buttonHover}
               whileTap={{ scale: 0.98 }}
               href="#projects"
-              className="focus-ring glow-button inline-flex items-center justify-center gap-2 rounded-md bg-brand-crimson px-5 py-3 text-sm font-bold text-white shadow-premium-glow transition-colors hover:bg-red-500"
+              className="focus-ring glow-button inline-flex items-center justify-center gap-2 rounded-md bg-brand-gold px-5 py-3 text-sm font-bold text-surface-black transition-colors hover:bg-white"
             >
               View Project Work
               <ArrowUpRight aria-hidden="true" size={18} />
@@ -833,7 +697,7 @@ export default function Home() {
               whileHover={buttonHover}
               whileTap={{ scale: 0.98 }}
               href="#connect"
-              className="focus-ring glow-button inline-flex items-center justify-center gap-2 rounded-md border border-white/10 bg-white/5 px-5 py-3 text-sm font-bold text-zinc-100 backdrop-blur-md transition-colors hover:border-brand-crimson/70 hover:text-white"
+              className="focus-ring glow-button inline-flex items-center justify-center gap-2 rounded-md border border-white/10 bg-white/[0.04] px-5 py-3 text-sm font-bold text-zinc-100 backdrop-blur-md transition-colors hover:border-brand-gold/45 hover:text-white"
             >
               Contact Me
               <Mail aria-hidden="true" size={18} />
@@ -845,12 +709,12 @@ export default function Home() {
                 href={resumePath}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="focus-ring glow-button inline-flex h-12 w-full items-center justify-center gap-2 rounded-md border border-brand-gold/45 bg-brand-gold/10 px-5 py-3 text-sm font-bold text-brand-gold backdrop-blur-md transition-colors hover:border-brand-gold hover:bg-brand-gold hover:text-surface-black sm:w-auto"
+                className="focus-ring glow-button inline-flex h-12 w-full items-center justify-center gap-2 rounded-md border border-white/10 bg-white/[0.04] px-5 py-3 text-sm font-bold text-zinc-100 backdrop-blur-md transition-colors hover:border-brand-gold/45 hover:text-white sm:w-auto"
               >
                 View Resume
                 <Eye aria-hidden="true" size={18} />
               </motion.a>
-              <div className="pointer-events-none absolute left-0 top-[calc(100%+0.75rem)] z-20 hidden w-64 rounded-lg border border-white/10 bg-surface-charcoal/95 p-4 text-left opacity-0 shadow-[0_20px_60px_rgba(0,0,0,0.42),0_0_24px_rgba(212,175,55,0.15)] backdrop-blur-xl transition duration-200 group-hover:translate-y-0 group-hover:opacity-100 md:block md:translate-y-1">
+              <div className="pointer-events-none absolute left-0 top-[calc(100%+0.75rem)] z-20 hidden w-64 rounded-lg border border-white/10 bg-surface-charcoal/95 p-4 text-left opacity-0 shadow-[0_20px_60px_rgba(0,0,0,0.36)] backdrop-blur-xl transition duration-200 group-hover:translate-y-0 group-hover:opacity-100 md:block md:translate-y-1">
                 <p className="font-heading text-sm font-bold text-white">Ansh Gupta Resume</p>
                 <p className="mt-1 text-xs leading-5 text-zinc-400">PDF resume with education, project work, technical skills, certifications, and contact details.</p>
               </div>
@@ -872,7 +736,7 @@ export default function Home() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Open GitHub profile"
-              className="focus-ring glow-button inline-flex h-12 w-full items-center justify-center rounded-md border border-white/10 bg-white/5 text-zinc-100 backdrop-blur-md transition-colors hover:border-brand-crimson/70 hover:text-white sm:w-12"
+              className="focus-ring glow-button inline-flex h-12 w-full items-center justify-center rounded-md border border-white/10 bg-white/[0.04] text-zinc-100 backdrop-blur-md transition-colors hover:border-brand-gold/45 hover:text-white sm:w-12"
             >
               <GitHubIcon />
             </motion.a>
@@ -931,7 +795,7 @@ export default function Home() {
           copy="A chronological view of learning outcomes, national recognition, and problem-solving discipline."
         />
         <div className="relative mt-12 grid gap-7">
-          <div className="absolute bottom-8 left-[14px] top-2 w-px bg-gradient-to-b from-brand-gold via-white/20 to-brand-crimson/20 sm:left-[22px]" />
+          <div className="absolute bottom-8 left-[14px] top-2 w-px bg-gradient-to-b from-brand-gold/70 via-white/20 to-transparent sm:left-[22px]" />
           {credentials.map((item, index) => (
             <CredentialTimelineItem key={`${item.title}-${item.year}`} item={item} index={index} />
           ))}
