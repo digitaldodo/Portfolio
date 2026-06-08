@@ -16,7 +16,7 @@ import {
 } from "lucide-react";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { Navigation } from "./components/Navigation";
 import { ScrollProgressRail } from "./components/ScrollProgressRail";
 import { SkillsSection } from "./components/SkillsSection";
@@ -325,6 +325,7 @@ function NarrativeBreak() {
 
 function ProjectSection() {
   const sectionRef = useRef<HTMLElement>(null);
+  const visualRef = useRef<HTMLDivElement>(null);
   const prefersReducedMotion = useReducedMotion();
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -332,6 +333,89 @@ function ProjectSection() {
   });
   const mockupY = useTransform(scrollYProgress, [0, 1], [36, -34]);
   const detailY = useTransform(scrollYProgress, [0, 1], [-14, 18]);
+
+  useEffect(() => {
+    const visual = visualRef.current;
+    if (!visual) return;
+
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const finePointer = window.matchMedia("(pointer: fine)").matches;
+    if (reducedMotion || !finePointer) return;
+
+    let frame = 0;
+    let bounds = visual.getBoundingClientRect();
+    let targetX = 0;
+    let targetY = 0;
+    let currentX = 0;
+    let currentY = 0;
+    let targetLightX = 58;
+    let targetLightY = 28;
+    let currentLightX = targetLightX;
+    let currentLightY = targetLightY;
+
+    const render = () => {
+      currentX += (targetX - currentX) * 0.085;
+      currentY += (targetY - currentY) * 0.085;
+      currentLightX += (targetLightX - currentLightX) * 0.075;
+      currentLightY += (targetLightY - currentLightY) * 0.075;
+
+      visual.style.setProperty("--project-x", currentX.toFixed(4));
+      visual.style.setProperty("--project-y", currentY.toFixed(4));
+      visual.style.setProperty("--project-light-x", `${currentLightX.toFixed(2)}%`);
+      visual.style.setProperty("--project-light-y", `${currentLightY.toFixed(2)}%`);
+
+      const isSettled =
+        Math.abs(targetX - currentX) < 0.001 &&
+        Math.abs(targetY - currentY) < 0.001 &&
+        Math.abs(targetLightX - currentLightX) < 0.02 &&
+        Math.abs(targetLightY - currentLightY) < 0.02;
+
+      if (isSettled) {
+        frame = 0;
+        return;
+      }
+
+      frame = window.requestAnimationFrame(render);
+    };
+
+    const requestRender = () => {
+      if (!frame) frame = window.requestAnimationFrame(render);
+    };
+
+    const syncPointer = (event: PointerEvent) => {
+      bounds = visual.getBoundingClientRect();
+      const x = (event.clientX - bounds.left) / bounds.width;
+      const y = (event.clientY - bounds.top) / bounds.height;
+      targetX = Math.max(-1, Math.min(1, x * 2 - 1));
+      targetY = Math.max(-1, Math.min(1, y * 2 - 1));
+      targetLightX = 44 + x * 28;
+      targetLightY = 16 + y * 22;
+      requestRender();
+    };
+
+    const resetPointer = () => {
+      targetX = 0;
+      targetY = 0;
+      targetLightX = 58;
+      targetLightY = 28;
+      requestRender();
+    };
+
+    const refreshBounds = () => {
+      bounds = visual.getBoundingClientRect();
+    };
+
+    visual.addEventListener("pointermove", syncPointer, { passive: true });
+    visual.addEventListener("pointerleave", resetPointer);
+    window.addEventListener("resize", refreshBounds, { passive: true });
+
+    return () => {
+      visual.removeEventListener("pointermove", syncPointer);
+      visual.removeEventListener("pointerleave", resetPointer);
+      window.removeEventListener("resize", refreshBounds);
+      if (frame) window.cancelAnimationFrame(frame);
+    };
+  }, []);
 
   return (
     <section ref={sectionRef} id="projects" className="project-cinema relative z-10 scroll-mt-0">
@@ -354,7 +438,11 @@ function ProjectSection() {
         </div>
 
         <motion.article {...fadeUp} className="project-showcase">
-          <motion.div style={{ y: prefersReducedMotion ? 0 : mockupY }} className="project-visual-stage">
+          <motion.div
+            ref={visualRef}
+            style={{ y: prefersReducedMotion ? 0 : mockupY }}
+            className="project-visual-stage"
+          >
             <div className="project-stage-glow" aria-hidden="true" />
             <div className="project-context-card project-context-card-top" aria-hidden="true">
               <span>Decision layer</span>

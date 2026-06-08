@@ -728,6 +728,7 @@ a {
 
 .project-cinema {
   position: relative;
+  overflow: hidden;
   padding-top: clamp(2.75rem, 5vw, 4.25rem);
   padding-bottom: clamp(5rem, 8vw, 7rem);
   background:
@@ -744,6 +745,22 @@ a {
   height: 34rem;
   background: linear-gradient(90deg, rgba(244, 241, 232, 0.045), transparent 30%, transparent 70%, rgba(159, 36, 52, 0.045));
   mask-image: radial-gradient(ellipse at 52% 42%, black, transparent 72%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.project-cinema::after {
+  content: "";
+  position: absolute;
+  inset: 4rem -18vw auto;
+  height: 36rem;
+  background:
+    radial-gradient(circle at 28% 46%, rgba(159, 36, 52, 0.075), transparent 18rem),
+    radial-gradient(circle at 72% 32%, rgba(212, 175, 55, 0.06), transparent 20rem),
+    linear-gradient(112deg, transparent 20%, rgba(244, 241, 232, 0.026), transparent 68%);
+  filter: blur(18px);
+  opacity: 0.72;
+  animation: projectAmbientDrift 18s var(--ease-premium) infinite alternate;
   pointer-events: none;
   z-index: -1;
 }
@@ -772,6 +789,12 @@ a {
   position: relative;
   min-height: clamp(31rem, 50vw, 38rem);
   isolation: isolate;
+  perspective: 1200px;
+  transform-style: preserve-3d;
+  --project-x: 0;
+  --project-y: 0;
+  --project-light-x: 58%;
+  --project-light-y: 28%;
 }
 
 .project-stage-glow {
@@ -784,6 +807,9 @@ a {
   filter: blur(20px);
   opacity: 0.72;
   z-index: -1;
+  transform: translate3d(calc(var(--project-x) * -8px), calc(var(--project-y) * -6px), 0) scale(1.02);
+  animation: projectGlowDrift 13s var(--ease-premium) infinite alternate;
+  will-change: transform, opacity;
 }
 
 .project-context-card {
@@ -801,9 +827,21 @@ a {
     inset 0 1px 0 rgba(255, 255, 255, 0.1),
     0 20px 54px rgba(0, 0, 0, 0.34);
   backdrop-filter: blur(18px);
+  will-change: transform;
+}
+
+.project-context-card::before {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  border-radius: inherit;
+  background: linear-gradient(125deg, rgba(255, 255, 255, 0.11), transparent 44%, rgba(212, 175, 55, 0.055));
+  opacity: 0.58;
+  pointer-events: none;
 }
 
 .project-context-card span {
+  position: relative;
   color: rgba(212, 175, 55, 0.76);
   font-size: 0.72rem;
   font-weight: 700;
@@ -811,6 +849,7 @@ a {
 }
 
 .project-context-card strong {
+  position: relative;
   color: rgba(255, 255, 255, 0.88);
   font-family: var(--font-space-grotesk), Arial, Helvetica, sans-serif;
   font-size: 0.98rem;
@@ -820,11 +859,13 @@ a {
 .project-context-card-top {
   left: 2rem;
   top: 0;
+  transform: translate3d(calc(var(--project-x) * 5px), calc(var(--project-y) * 4px), 0);
 }
 
 .project-context-card-bottom {
   right: 4.2rem;
   bottom: 3rem;
+  transform: translate3d(calc(var(--project-x) * -4px), calc(var(--project-y) * 3px), 0);
 }
 
 .project-browser {
@@ -844,7 +885,9 @@ a {
     inset 0 -1px 0 rgba(255, 255, 255, 0.05),
     0 48px 120px rgba(0, 0, 0, 0.48),
     22px 20px 80px rgba(159, 36, 52, 0.09);
-  transform: rotate(-0.8deg);
+  transform: translate3d(calc(var(--project-x) * -5px), calc(var(--project-y) * -3px), 0) rotate(-0.8deg);
+  transform-style: preserve-3d;
+  will-change: transform;
 }
 
 .project-browser::before {
@@ -857,6 +900,18 @@ a {
   background-size: 4.25rem 4.25rem;
   mask-image: linear-gradient(135deg, black, transparent 74%);
   pointer-events: none;
+}
+
+.project-browser::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at var(--project-light-x) var(--project-light-y), rgba(255, 255, 255, 0.105), transparent 10rem),
+    linear-gradient(118deg, transparent 16%, rgba(244, 241, 232, 0.055) 38%, transparent 58%);
+  opacity: 0.66;
+  pointer-events: none;
+  mix-blend-mode: screen;
 }
 
 .project-browser-bar {
@@ -889,6 +944,8 @@ a {
   display: grid;
   grid-template-columns: 4.5rem 1fr;
   min-height: 27.4rem;
+  transform: translate3d(calc(var(--project-x) * 2px), calc(var(--project-y) * 1.5px), 0);
+  will-change: transform;
 }
 
 .project-side-rail {
@@ -927,9 +984,11 @@ a {
 }
 
 .project-dashboard-header span {
+  position: relative;
   display: inline-flex;
   min-height: 1.9rem;
   align-items: center;
+  gap: 0.38rem;
   border-radius: 999px;
   padding: 0.4rem 0.62rem;
   background: rgba(212, 175, 55, 0.12);
@@ -937,6 +996,16 @@ a {
   font-size: 0.76rem;
   font-weight: 700;
   white-space: nowrap;
+}
+
+.project-dashboard-header span::before {
+  content: "";
+  width: 0.42rem;
+  aspect-ratio: 1;
+  border-radius: 999px;
+  background: var(--gold);
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.48);
+  animation: projectLivePulse 2.8s ease-in-out infinite;
 }
 
 .project-screen-label {
@@ -956,6 +1025,7 @@ a {
 }
 
 .project-approval-card {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -970,6 +1040,17 @@ a {
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.075),
     0 14px 36px rgba(0, 0, 0, 0.18);
+  overflow: hidden;
+}
+
+.project-approval-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, transparent 8%, rgba(244, 241, 232, 0.075) 34%, transparent 58%);
+  transform: translateX(-120%);
+  animation: projectApprovalSweep 6.8s ease-in-out infinite;
+  pointer-events: none;
 }
 
 .project-table {
@@ -979,6 +1060,7 @@ a {
 }
 
 .project-table div {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -996,6 +1078,11 @@ a {
   font-size: 0.78rem;
 }
 
+.project-table div:first-child strong {
+  color: #fff7dc;
+  text-shadow: 0 0 14px rgba(212, 175, 55, 0.22);
+}
+
 .project-approval-card p {
   color: rgba(212, 212, 216, 0.62);
   font-size: 0.82rem;
@@ -1010,6 +1097,8 @@ a {
 
 .project-approval-card svg {
   color: var(--gold);
+  filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.24));
+  animation: projectBadgeGlow 3.6s ease-in-out infinite;
 }
 
 .project-flow-map {
@@ -1020,9 +1109,30 @@ a {
 }
 
 .project-flow-step {
+  position: relative;
   min-height: 7.5rem;
   border-top: 1px solid rgba(244, 241, 232, 0.12);
   padding-top: 0.9rem;
+}
+
+.project-flow-step::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: -1px;
+  width: 38%;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(212, 175, 55, 0.65), transparent);
+  opacity: 0;
+  animation: projectStepSignal 5.4s ease-in-out infinite;
+}
+
+.project-flow-step:nth-child(2)::before {
+  animation-delay: 1.2s;
+}
+
+.project-flow-step:nth-child(3)::before {
+  animation-delay: 2.4s;
 }
 
 .project-flow-step span {
@@ -1053,8 +1163,45 @@ a {
     inset 0 0 0 1px rgba(255, 255, 255, 0.11),
     0 30px 78px rgba(0, 0, 0, 0.5),
     -18px 18px 58px rgba(212, 175, 55, 0.075);
-  transform: rotate(1.8deg);
+  transform:
+    translate3d(calc(var(--project-x) * 8px), calc(var(--project-y) * 6px), 0)
+    rotateX(calc(var(--project-y) * -2.5deg))
+    rotateY(calc(var(--project-x) * 3deg))
+    rotate(1.8deg);
+  transform-style: preserve-3d;
   z-index: 5;
+  transition: box-shadow 260ms var(--ease-premium);
+  will-change: transform;
+}
+
+.project-phone::before {
+  content: "";
+  position: absolute;
+  inset: 0.1rem;
+  border-radius: inherit;
+  background:
+    radial-gradient(circle at var(--project-light-x) var(--project-light-y), rgba(255, 255, 255, 0.18), transparent 8.5rem),
+    linear-gradient(132deg, rgba(255, 255, 255, 0.16), transparent 24%, transparent 58%, rgba(212, 175, 55, 0.055));
+  opacity: 0.54;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+.project-phone::after {
+  content: "";
+  position: absolute;
+  inset: 0.7rem;
+  border-radius: 1.45rem;
+  background: linear-gradient(116deg, transparent 8%, rgba(244, 241, 232, 0.12), transparent 34%);
+  opacity: 0.34;
+  pointer-events: none;
+}
+
+.project-visual-stage:hover .project-phone {
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.15),
+    0 38px 92px rgba(0, 0, 0, 0.56),
+    -20px 20px 68px rgba(212, 175, 55, 0.105);
 }
 
 .project-phone-notch {
@@ -1066,9 +1213,12 @@ a {
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.16);
   transform: translateX(-50%);
+  z-index: 2;
 }
 
 .project-phone-content {
+  position: relative;
+  z-index: 1;
   display: grid;
   min-height: 23.2rem;
   place-items: center;
@@ -1078,6 +1228,8 @@ a {
     radial-gradient(circle at 50% 18%, rgba(212, 175, 55, 0.14), transparent 10rem),
     rgba(255, 255, 255, 0.04);
   text-align: center;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  animation: projectScreenBreath 5.6s ease-in-out infinite;
 }
 
 .project-phone-content svg {
@@ -1119,6 +1271,7 @@ a {
   color: var(--gold);
   font-size: 0.82rem;
   font-weight: 700;
+  box-shadow: 0 0 18px rgba(212, 175, 55, 0.12);
 }
 
 .project-story-panel {
@@ -1400,6 +1553,106 @@ a {
   line-height: 1.7;
 }
 
+@keyframes projectAmbientDrift {
+  from {
+    transform: translate3d(-0.6rem, -0.4rem, 0) scale(1);
+    opacity: 0.55;
+  }
+
+  to {
+    transform: translate3d(0.7rem, 0.35rem, 0) scale(1.025);
+    opacity: 0.78;
+  }
+}
+
+@keyframes projectGlowDrift {
+  from {
+    opacity: 0.58;
+  }
+
+  to {
+    opacity: 0.82;
+  }
+}
+
+@keyframes projectLivePulse {
+  0%,
+  100% {
+    opacity: 0.68;
+    transform: scale(0.92);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes projectApprovalSweep {
+  0%,
+  54% {
+    transform: translateX(-120%);
+    opacity: 0;
+  }
+
+  68% {
+    opacity: 1;
+  }
+
+  82%,
+  100% {
+    transform: translateX(120%);
+    opacity: 0;
+  }
+}
+
+@keyframes projectBadgeGlow {
+  0%,
+  100% {
+    opacity: 0.78;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.035);
+  }
+}
+
+@keyframes projectStepSignal {
+  0%,
+  34%,
+  100% {
+    opacity: 0;
+    transform: translateX(0);
+  }
+
+  46%,
+  60% {
+    opacity: 0.72;
+  }
+
+  72% {
+    opacity: 0;
+    transform: translateX(62%);
+  }
+}
+
+@keyframes projectScreenBreath {
+  0%,
+  100% {
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      inset 0 0 36px rgba(212, 175, 55, 0.012);
+  }
+
+  50% {
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.09),
+      inset 0 0 44px rgba(212, 175, 55, 0.032);
+  }
+}
+
 @media (max-width: 640px) {
   html {
     scroll-padding-top: 5.5rem;
@@ -1534,10 +1787,32 @@ a {
     width: 100%;
     min-height: 42rem;
     transform: none !important;
+    perspective: none;
   }
 
   .project-story-panel {
     transform: none !important;
+  }
+
+  .project-cinema::after,
+  .project-stage-glow,
+  .project-phone-content,
+  .project-dashboard-header span::before,
+  .project-approval-card::after,
+  .project-approval-card svg,
+  .project-flow-step::before {
+    animation: none;
+  }
+
+  .project-browser,
+  .project-browser-grid,
+  .project-context-card-top,
+  .project-phone {
+    transform: none;
+  }
+
+  .project-context-card-bottom {
+    display: none;
   }
 
   .project-browser {
