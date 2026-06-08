@@ -183,7 +183,8 @@ function Hero() {
 
           <p className="eyebrow hero-kicker">Software Engineering Portfolio</p>
           <h1 className="font-heading hero-headline text-white">
-            Product engineering, built with restraint.
+            <span>Product engineering,</span>
+            <span>built with restraint.</span>
           </h1>
 
           <div className="hero-support">
@@ -191,6 +192,12 @@ function Hero() {
               Computer Science undergraduate building secure full-stack products with composed interfaces,
               dependable backend flows, and clear execution habits.
             </p>
+
+            <div className="hero-proof-line" aria-label="Engineering focus areas">
+              <span>Full-stack systems</span>
+              <span>Role-aware UX</span>
+              <span>Production habits</span>
+            </div>
 
             <div className="hero-actions">
               <a href="#projects" className="focus-ring primary-link">
@@ -212,18 +219,30 @@ function Hero() {
           <div className="hero-feature-visual" aria-hidden="true">
             <div className="hero-feature-grid" />
             <div className="hero-feature-ring" />
+            <div className="hero-feature-beacon">
+              <span />
+              <p>Live access cycle</p>
+            </div>
             <div className="hero-flow-line hero-flow-line-one" />
             <div className="hero-flow-line hero-flow-line-two" />
             <span className="hero-flow-node hero-flow-node-one">Admin</span>
             <span className="hero-flow-node hero-flow-node-two">Guard</span>
             <span className="hero-flow-node hero-flow-node-three">Guest</span>
+            <div className="hero-system-card hero-system-card-one">
+              <strong>Approval desk</strong>
+              <span>Queue / roles / status</span>
+            </div>
+            <div className="hero-system-card hero-system-card-two">
+              <strong>QR verify</strong>
+              <span>Mobile checkpoint</span>
+            </div>
             <p className="hero-feature-word">AccessFlow</p>
           </div>
           <div className="hero-feature-copy">
             <p className="eyebrow">Selected Case Study</p>
             <h2 className="font-heading">AccessFlow</h2>
             <p>
-              Visitor and workforce operations across approvals, QR checks, web dashboards, and field use.
+              A product ecosystem connecting approvals, QR checks, dashboards, and field verification.
             </p>
             <a href="#projects" className="focus-ring hero-feature-link">
               View project
@@ -336,6 +355,11 @@ function ProjectSection() {
 
         <motion.article {...fadeUp} className="project-showcase">
           <motion.div style={{ y: prefersReducedMotion ? 0 : mockupY }} className="project-visual-stage">
+            <div className="project-stage-glow" aria-hidden="true" />
+            <div className="project-context-card project-context-card-top" aria-hidden="true">
+              <span>Decision layer</span>
+              <strong>Role-based approval</strong>
+            </div>
             <div className="project-browser" aria-label="AccessFlow operations dashboard mockup">
               <div className="project-browser-bar">
                 <span />
@@ -385,6 +409,11 @@ function ProjectSection() {
               </div>
             </div>
 
+            <div className="project-context-card project-context-card-bottom" aria-hidden="true">
+              <span>Field layer</span>
+              <strong>QR-backed verification</strong>
+            </div>
+
             <div className="project-phone" aria-hidden="true">
               <div className="project-phone-notch" />
               <div className="project-phone-content">
@@ -415,6 +444,11 @@ function ProjectSection() {
                 </div>
               ))}
             </div>
+
+            <p className="project-story-copy">
+              The system is shaped around one practical loop: request, approve, and verify.
+              Each surface has a clear owner so operational teams can move quickly without losing accountability.
+            </p>
 
             <div className="project-notes">
               {projectNotes.map((note) => (
