@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { FileText, Mail } from "lucide-react";
+import { FileText, Mail, Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const navItems = [
@@ -18,6 +18,7 @@ const logoPath = "/assets/ag-logo.svg";
 
 export function Navigation() {
   const [activeHref, setActiveHref] = useState("#home");
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
     let animationFrame = 0;
@@ -62,6 +63,21 @@ export function Navigation() {
     };
   }, []);
 
+  useEffect(() => {
+    if (!isMenuOpen) {
+      return;
+    }
+
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setIsMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("keydown", closeOnEscape);
+    return () => document.removeEventListener("keydown", closeOnEscape);
+  }, [isMenuOpen]);
+
   return (
     <header className="fixed inset-x-0 top-4 z-50 px-4">
       <nav className="section-shell nav-shell flex min-h-14 items-center justify-between gap-4 px-2.5 py-2">
@@ -76,7 +92,7 @@ export function Navigation() {
           <span className="hidden sm:inline">Ansh Gupta</span>
         </a>
 
-        <div className="nav-scrollbar flex min-w-0 flex-1 items-center justify-start gap-1 overflow-x-auto md:justify-center">
+        <div className="nav-desktop-links nav-scrollbar flex min-w-0 flex-1 items-center justify-start gap-1 overflow-x-auto md:justify-center">
           {navItems.map(({ label, href }) => (
             <a
               key={href}
@@ -107,8 +123,61 @@ export function Navigation() {
             <Mail aria-hidden="true" size={15} />
             Connect
           </a>
+          <button
+            type="button"
+            className="focus-ring nav-menu-button"
+            aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={isMenuOpen}
+            aria-controls="mobile-navigation"
+            onClick={() => setIsMenuOpen((open) => !open)}
+          >
+            {isMenuOpen ? <X aria-hidden="true" size={18} /> : <Menu aria-hidden="true" size={18} />}
+          </button>
         </div>
       </nav>
+
+      <div
+        id="mobile-navigation"
+        className="section-shell mobile-nav-panel"
+        data-open={isMenuOpen}
+        aria-hidden={!isMenuOpen}
+      >
+        <div className="mobile-nav-grid">
+          {navItems.map(({ label, href }) => (
+            <a
+              key={href}
+              href={href}
+              data-active={activeHref === href}
+              className="focus-ring mobile-nav-link"
+              aria-current={activeHref === href ? "page" : undefined}
+              tabIndex={isMenuOpen ? undefined : -1}
+              onClick={() => setIsMenuOpen(false)}
+            >
+              {label}
+            </a>
+          ))}
+        </div>
+        <div className="mobile-nav-actions">
+          <a
+            href={resumePath}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="focus-ring quiet-link"
+            tabIndex={isMenuOpen ? undefined : -1}
+          >
+            <FileText aria-hidden="true" size={17} />
+            Resume
+          </a>
+          <a
+            href="mailto:anshguptakmrn@gmail.com"
+            className="focus-ring primary-link"
+            tabIndex={isMenuOpen ? undefined : -1}
+          >
+            <Mail aria-hidden="true" size={17} />
+            Contact
+          </a>
+        </div>
+      </div>
     </header>
   );
 }

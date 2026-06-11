@@ -485,7 +485,7 @@ function ProjectSection() {
                       </div>
                     ))}
                   </div>
-                  <div className="project-flow-map">
+                  <div className="project-flow-map project-screen-flow-map">
                     {projectFrames.map((frame) => (
                       <div key={frame.title} className="project-flow-step">
                         <span>{frame.label}</span>
